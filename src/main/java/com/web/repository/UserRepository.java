@@ -35,4 +35,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query("select u from User u where u.authorities.name = ?1")
     List<User> getUserByRole(String role);
 
+    @Query(value = "select * from users u WHERE u.authority_name = ?1 and \n" +
+            "(SELECT count(g.macb) from giang_vien g WHERE g.user_id = u.id) = 0", nativeQuery = true)
+    List<User> getTeacher(String role);
+
 }

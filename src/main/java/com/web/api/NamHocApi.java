@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/nam-hoc")
 @CrossOrigin
@@ -23,6 +25,12 @@ public class NamHocApi {
     @GetMapping("/all/find-all")
     public ResponseEntity<?> getAll(Pageable pageable){
         Page<NamHoc> result = namHocService.findAll(pageable);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/all/find-all-list")
+    public ResponseEntity<?> getAllList(){
+        List<NamHoc> result = namHocService.findAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

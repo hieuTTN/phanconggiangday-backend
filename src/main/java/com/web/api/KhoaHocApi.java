@@ -25,6 +25,12 @@ public class KhoaHocApi {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/all/find-all-list")
+    public ResponseEntity<?> getAllList(){
+        List<KhoaHoc> result = khoaHocService.findAll();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping("/admin/add")
     public ResponseEntity<?> create(@RequestBody KhoaHoc khoaHoc) {
         KhoaHoc result = khoaHocService.save(khoaHoc);

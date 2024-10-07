@@ -40,6 +40,11 @@ public class KhoaHocService {
         return page;
     }
 
+    public List<KhoaHoc> findAll(){
+        List<KhoaHoc> page = khoaHocRepository.findAll();
+        return page;
+    }
+
     public void delete(String maKh){
         try {
             khoaHocRepository.deleteById(maKh);

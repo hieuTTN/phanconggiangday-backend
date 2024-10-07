@@ -16,6 +16,7 @@ import com.web.repository.UserRepository;
 import com.web.service.GoogleOAuth2Service;
 import com.web.service.UserService;
 import com.web.utils.CloudinaryService;
+import com.web.utils.Contains;
 import com.web.utils.MailService;
 import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,4 +157,8 @@ public class UserApi {
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
+    @GetMapping("/admin/user-teacher")
+    public List<User> getUserTeacher(){
+        return userRepository.getTeacher(Contains.ROLE_TEACHER);
+    }
 }
