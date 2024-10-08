@@ -116,7 +116,7 @@ public class UserService  {
             userRepository.save(user);
         }
         else{
-            throw new MessageException("Invalid password", 500);
+            throw new MessageException("Mật khẩu cũ không chính xác", 500);
         }
     }
 

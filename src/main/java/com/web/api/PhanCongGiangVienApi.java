@@ -46,4 +46,10 @@ public class PhanCongGiangVienApi {
         List<PhanCongGiangVien> result = phanCongGiangVienService.findByKeHoach(keHoachId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/teacher/phan-cong-cua-toi")
+    public ResponseEntity<?> phanCongCuaToi(Pageable pageable,@RequestParam(required = false) Long idNamHoc){
+        Page<PhanCongGiangVien> result = phanCongGiangVienService.phanCongCuaToi(pageable, idNamHoc);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

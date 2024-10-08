@@ -27,6 +27,10 @@ public class KeHoachMoMon {
     private KhoaHoc khoaHoc;
 
     @ManyToOne
+    @JoinColumn(name = "lopHoc")
+    private LopHoc lopHoc;
+
+    @ManyToOne
     @JoinColumn(name = "NamHoc")
     private NamHoc namHoc;
 

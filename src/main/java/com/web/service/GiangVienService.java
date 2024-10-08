@@ -2,9 +2,11 @@ package com.web.service;
 
 import com.web.entity.GiangVien;
 import com.web.entity.KhoaHoc;
+import com.web.entity.User;
 import com.web.exception.MessageException;
 import com.web.repository.GiangVienRepository;
 import com.web.repository.KhoaHocRepository;
+import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,9 @@ public class GiangVienService {
 
     @Autowired
     private GiangVienRepository giangVienRepository;
+
+    @Autowired
+    private UserUtils userUtils;
 
     public GiangVien save(GiangVien giangVien){
         Optional<GiangVien> ex = giangVienRepository.findById(giangVien.getMaCB());
@@ -71,5 +76,26 @@ public class GiangVienService {
 
     public List<GiangVien> findAll() {
         return giangVienRepository.findAll();
+    }
+
+    public GiangVien capNhatThongTin(GiangVien giangVien) {
+        User user = userUtils.getUserWithAuthority();
+        Optional<GiangVien> gv = giangVienRepository.findByUserId(user.getId());
+        if(gv.isEmpty()){
+            throw new MessageException("Không tìm thấy giảng viên");
+        }
+        giangVien.setMaCB(gv.get().getMaCB());
+        giangVien.setUser(gv.get().getUser());
+        giangVien.setDangHopDong(gv.get().getDangHopDong());
+        return giangVienRepository.save(giangVien);
+    }
+
+    public GiangVien thongTinCuaToi() {
+        User user = userUtils.getUserWithAuthority();
+        Optional<GiangVien> gv = giangVienRepository.findByUserId(user.getId());
+        if(gv.isEmpty()){
+            throw new MessageException("Không tìm thấy giảng viên");
+        }
+        return gv.get();
     }
 }
