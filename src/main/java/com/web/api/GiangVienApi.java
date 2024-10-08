@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/giang-vien")
 @CrossOrigin
@@ -22,6 +24,12 @@ public class GiangVienApi {
     @GetMapping("/all/find-all")
     public ResponseEntity<?> getAll(Pageable pageable, @RequestParam(required = false) String search){
         Page<GiangVien> result = giangVienService.findAll(pageable, search);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/all/find-all-list")
+    public ResponseEntity<?> getAllList(){
+        List<GiangVien> result = giangVienService.findAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

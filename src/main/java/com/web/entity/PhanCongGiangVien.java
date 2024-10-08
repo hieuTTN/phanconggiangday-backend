@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "phan_cong_giang_vien")
@@ -17,11 +18,13 @@ public class PhanCongGiangVien {
     private Long id;
 
     @Column(name = "soNhom")
-    private Integer SoNhom;
+    private Integer soNhom;
+
+    private LocalDateTime ngayCapNhat;
 
     @ManyToOne
-    @JoinColumn(name = "MaHP")
-    private HocPhan hocPhan;
+    @JoinColumn(name = "KeHoachMoMon")
+    private KeHoachMoMon keHoachMoMon;
 
     @ManyToOne
     @JoinColumn(name = "MaCB")
