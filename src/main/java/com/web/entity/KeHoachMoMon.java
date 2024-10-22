@@ -1,9 +1,12 @@
 package com.web.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ke_hoach_mo_mon")
@@ -37,4 +40,11 @@ public class KeHoachMoMon {
     @ManyToOne
     @JoinColumn(name = "MaHP")
     private HocPhan hocPhan;
+
+    @OneToMany(mappedBy = "keHoachMoMon", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<KeHoachMoMonNganh> keHoachMoMonNganhs;
+
+    @Transient
+    private List<String> listMaNganh = new ArrayList<>();
 }
