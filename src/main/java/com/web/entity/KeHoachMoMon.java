@@ -25,6 +25,8 @@ public class KeHoachMoMon {
     @Column(name = "SoLuongSinhVienNhom")
     private Integer soLuongSinhVienNhom;
 
+    private Integer tongSoSinhVien;
+
     @ManyToOne
     @JoinColumn(name = "KhoaHoc")
     private KhoaHoc khoaHoc;

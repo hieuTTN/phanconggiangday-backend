@@ -27,6 +27,13 @@ public class KeHoachMoMonApi {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/head-department/find-by-truong-bo-mon")
+    public ResponseEntity<?> findByTruongBoMon(Pageable pageable, @RequestParam(required = false) String maKhoaHoc,
+                                    @RequestParam(required = false) Long idNamHoc, @RequestParam(required = false) Long maHP){
+        Page<KeHoachMoMon> result = keHoachMoMonService.findByTruongBoMon(pageable, maKhoaHoc, idNamHoc, maHP);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping("/admin/add")
     public ResponseEntity<?> create(@RequestBody KeHoachMoMon keHoachMoMon) {
         KeHoachMoMon result = keHoachMoMonService.save(keHoachMoMon);

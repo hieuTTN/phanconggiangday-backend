@@ -22,8 +22,8 @@ public class GiangVien {
     @Column(name = "NgaySinh")
     private Date ngaySinh;
 
-    @Column(name = "ChuyenNganh")
-    private String chuyenNganh;
+    @ManyToOne
+    private ChuyenNganh chuyenNganh;
 
     @Column(name = "HocVi")
     private String hocVi;

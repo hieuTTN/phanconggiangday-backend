@@ -159,6 +159,6 @@ public class UserApi {
 
     @GetMapping("/admin/user-teacher")
     public List<User> getUserTeacher(){
-        return userRepository.getTeacher(Contains.ROLE_TEACHER);
+        return userRepository.getTeacher(Contains.ROLE_TEACHER, Contains.ROLE_HEAD_DEPARTMENT);
     }
 }

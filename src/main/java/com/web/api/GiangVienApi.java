@@ -33,11 +33,19 @@ public class GiangVienApi {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/head-department/find-all-by-chuyen-nganh")
+    public ResponseEntity<?> getAllByChuyenNganh(){
+        List<GiangVien> result = giangVienService.findAllByChuyenNganh();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping("/admin/add")
     public ResponseEntity<?> create(@RequestBody GiangVien giangVien) {
         GiangVien result = giangVienService.save(giangVien);
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
+
+
 
     @PostMapping("/admin/update")
     public ResponseEntity<?> update(@RequestBody GiangVien giangVien) {
@@ -50,9 +58,16 @@ public class GiangVienApi {
         giangVienService.delete(maCb);
     }
 
+
     @GetMapping("/all/find-by-macb")
     public ResponseEntity<?> findByMaHp(@RequestParam("maCb") Long maCb) {
         GiangVien result = giangVienService.findByMaCb(maCb);
+        return new ResponseEntity(result, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/head-department/thong-tin-cua-toi")
+    public ResponseEntity<?> thongTinCuaToiByTBM() {
+        GiangVien result = giangVienService.thongTinCuaToi();
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
 
@@ -64,6 +79,12 @@ public class GiangVienApi {
 
     @PostMapping("/teacher/cap-nhat-thong-tin")
     public ResponseEntity<?> capNhatThongTin(@RequestBody GiangVien giangVien) {
+        GiangVien result = giangVienService.capNhatThongTin(giangVien);
+        return new ResponseEntity(result, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/head-department/cap-nhat-thong-tin")
+    public ResponseEntity<?> capNhatThongTinByTBM(@RequestBody GiangVien giangVien) {
         GiangVien result = giangVienService.capNhatThongTin(giangVien);
         return new ResponseEntity(result, HttpStatus.CREATED);
     }

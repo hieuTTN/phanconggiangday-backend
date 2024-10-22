@@ -36,13 +36,30 @@ public class PhanCongGiangVienApi {
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
 
+    @PostMapping("/head-department/add")
+    public ResponseEntity<?> createByTBM(@RequestBody PhanCongGiangVien phanCongGiangVien) {
+        PhanCongGiangVien result = phanCongGiangVienService.save(phanCongGiangVien);
+        return new ResponseEntity(result, HttpStatus.CREATED);
+    }
+
     @DeleteMapping("/admin/delete")
     public void delete(@RequestParam Long id){
         phanCongGiangVienService.delete(id);
     }
 
+    @DeleteMapping("/head-department/delete")
+    public void deleteByTbm(@RequestParam Long id){
+        phanCongGiangVienService.delete(id);
+    }
+
     @GetMapping("/admin/find-by-ke-hoach")
     public ResponseEntity<?> findByKeHoach(@RequestParam Long keHoachId){
+        List<PhanCongGiangVien> result = phanCongGiangVienService.findByKeHoach(keHoachId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/head-department/find-by-ke-hoach")
+    public ResponseEntity<?> findByKeHoachAndTBM(@RequestParam Long keHoachId){
         List<PhanCongGiangVien> result = phanCongGiangVienService.findByKeHoach(keHoachId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

@@ -6,6 +6,7 @@ import com.web.entity.User;
 import com.web.exception.MessageException;
 import com.web.repository.GiangVienRepository;
 import com.web.repository.KhoaHocRepository;
+import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -78,6 +79,13 @@ public class GiangVienService {
         return giangVienRepository.findAll();
     }
 
+    public List<GiangVien> findAllByChuyenNganh() {
+        User user = userUtils.getUserWithAuthority();
+        GiangVien giangVien = giangVienRepository.findByUserId(user.getId()).get();
+        List<GiangVien> list = giangVienRepository.findByChuyenNganh(giangVien.getChuyenNganh().getMaChuyenNganh());
+        return list;
+    }
+
     public GiangVien capNhatThongTin(GiangVien giangVien) {
         User user = userUtils.getUserWithAuthority();
         Optional<GiangVien> gv = giangVienRepository.findByUserId(user.getId());
@@ -87,6 +95,7 @@ public class GiangVienService {
         giangVien.setMaCB(gv.get().getMaCB());
         giangVien.setUser(gv.get().getUser());
         giangVien.setDangHopDong(gv.get().getDangHopDong());
+        giangVien.setChuyenNganh(gv.get().getChuyenNganh());
         return giangVienRepository.save(giangVien);
     }
 

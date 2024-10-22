@@ -22,7 +22,7 @@ public class UserDto {
 
     private String email;
 
-    private String fullname;
+    private String fullName;
 
     private String phone;
 

@@ -3,10 +3,7 @@ package com.web.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "hoc_phan")
@@ -36,7 +33,8 @@ public class HocPhan {
     @Column(name = "HeSo")
     private Float heSo;
 
-
+    @ManyToOne
+    private ChuyenNganh chuyenNganh;
 
 
 }
