@@ -14,12 +14,11 @@ public class KeHoachMoMonNganh {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Long id;
 
     @ManyToOne
     @JsonBackReference
-    private KeHoachMoMon keHoachMoMon;
+    private KeHoachChiTiet keHoachChiTiet;
 
     @ManyToOne
     private Nganh nganh;

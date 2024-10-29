@@ -18,22 +18,10 @@ public class KhoaHocService {
     private KhoaHocRepository khoaHocRepository;
 
     public KhoaHoc save(KhoaHoc khoaHoc){
-        Optional<KhoaHoc> ex = khoaHocRepository.findById(khoaHoc.getMaKhoaHoc());
-        if(ex.isPresent()){
-            throw new MessageException("Mã khóa học đã tồn tại");
-        }
         khoaHocRepository.save(khoaHoc);
         return khoaHoc;
     }
 
-    public KhoaHoc update(KhoaHoc khoaHoc){
-        Optional<KhoaHoc> ex = khoaHocRepository.findById(khoaHoc.getMaKhoaHoc());
-        if(ex.isEmpty()){
-            throw new MessageException("Mã khóa học không tồn tại");
-        }
-        khoaHocRepository.save(khoaHoc);
-        return khoaHoc;
-    }
 
     public Page<KhoaHoc> findAll(Pageable pageable){
         Page<KhoaHoc> page = khoaHocRepository.findAll(pageable);
@@ -45,9 +33,9 @@ public class KhoaHocService {
         return page;
     }
 
-    public void delete(String maKh){
+    public void delete(Long id){
         try {
-            khoaHocRepository.deleteById(maKh);
+            khoaHocRepository.deleteById(id);
         }
         catch (Exception e){
             throw new MessageException("Khóa học này đã được dùng không thể xóa");

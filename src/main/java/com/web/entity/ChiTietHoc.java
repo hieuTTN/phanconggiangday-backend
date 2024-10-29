@@ -1,25 +1,26 @@
 package com.web.entity;
 
-import com.web.enums.TrangThaiKhoaHoc;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "khoa_hoc")
+@Table(name = "chi_tiet_hoc")
 @Getter
 @Setter
-public class KhoaHoc {
+public class ChiTietHoc {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String maKhoaHoc;
+    @ManyToOne
+    private HocPhan hocPhan;
 
-    private String tenKhoaHoc;
+    @ManyToOne
+    private HocKy hocKy;
 
-    private TrangThaiKhoaHoc trangThaiKhoaHoc;
-
+    @ManyToOne
+    private KeHoachHoc keHoachHoc;
 }

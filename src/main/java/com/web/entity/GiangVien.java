@@ -13,34 +13,28 @@ import java.sql.Date;
 public class GiangVien {
 
     @Id
-    @Column(name = "MaCB")
-    private Long maCB;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "TenGV")
+    private String maCB;
+
     private String tenGV;
 
-    @Column(name = "NgaySinh")
     private Date ngaySinh;
 
-    @ManyToOne
-    private ChuyenNganh chuyenNganh;
-
-    @Column(name = "HocVi")
     private String hocVi;
 
-    @Column(name = "ChucDanh")
     private String chucDanh;
 
-    @Column(name = "DonViCongTac")
     private String donViCongTac;
 
-    @Column(name = "DienThoai")
     private String dienThoai;
 
-    @Column(name = "DangHopDong")
     private String dangHopDong;
 
     @ManyToOne
     private User user;
 
+    @ManyToOne
+    private BoMon boMon;
 }

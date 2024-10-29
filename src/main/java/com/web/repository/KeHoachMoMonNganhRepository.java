@@ -11,6 +11,6 @@ public interface KeHoachMoMonNganhRepository extends JpaRepository<KeHoachMoMonN
 
     @Modifying
     @Transactional
-    @Query("delete from KeHoachMoMonNganh p where p.keHoachMoMon.id = ?1")
+    @Query("delete from KeHoachMoMonNganh p where p.keHoachChiTiet.id = ?1")
     int deleteByKeHoachMoMon(Long id);
 }

@@ -13,12 +13,9 @@ public class NamHoc {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Long id;
 
-    @Column(name = "TenNamHoc")
     private String tenNamHoc;
 
-    @Column(name = "HocKy")
     private String hocKy;
 }

@@ -12,32 +12,25 @@ import javax.persistence.*;
 public class LopHoc {
 
     @Id
-    @Column(name = "MaLop")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String maLop ;
 
-    @Column(name = "TenLop")
     private String tenLop ;
 
-    @Column(name = "Khoa")
-    private String khoa ;
+    private Integer soSinhVienHienTai;
 
-    @Column(name = "NganhDaoTao")
-    private String nganhDaoTao ;
-
-    @Column(name = "SoSVThangTruoc")
-    private Integer soSVThangTruoc ;
-
-    @Column(name = "SoSVHienCo")
-    private Integer soSVHienCo ;
-
-    @Column(name = "SoSVNam")
     private Integer soSVNam ;
 
-    @Column(name = "SoSVNu")
     private Integer soSVNu ;
 
     @ManyToOne
     @JoinColumn(name = "KhoaHoc")
     private KhoaHoc	khoaHoc ;
+
+    @ManyToOne
+    @JoinColumn(name = "nganh")
+    private Nganh nganh;
 
 }

@@ -1,12 +1,9 @@
 package com.web.service;
 
 import com.web.entity.GiangVien;
-import com.web.entity.KhoaHoc;
 import com.web.entity.User;
 import com.web.exception.MessageException;
 import com.web.repository.GiangVienRepository;
-import com.web.repository.KhoaHocRepository;
-import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +23,7 @@ public class GiangVienService {
     private UserUtils userUtils;
 
     public GiangVien save(GiangVien giangVien){
-        Optional<GiangVien> ex = giangVienRepository.findById(giangVien.getMaCB());
+        Optional<GiangVien> ex = giangVienRepository.findByMaGv(giangVien.getMaCB());
         if(ex.isPresent()){
             throw new MessageException("Mã giảng viên đã tồn tại");
         }
@@ -39,11 +36,11 @@ public class GiangVienService {
     }
 
     public GiangVien update(GiangVien giangVien){
-        Optional<GiangVien> ex = giangVienRepository.findById(giangVien.getMaCB());
-        if(ex.isEmpty()){
-            throw new MessageException("Mã giảng viên không tồn tại");
+        Optional<GiangVien> ex = giangVienRepository.findByMaGvAndId(giangVien.getMaCB(), giangVien.getId());
+        if(ex.isPresent()){
+            throw new MessageException("Mã giảng viên đã tồn tại");
         }
-        Optional<GiangVien> exP = giangVienRepository.findByUserIdAndMaCb(giangVien.getUser().getId(), giangVien.getMaCB());
+        Optional<GiangVien> exP = giangVienRepository.findByUserIdAndMaCb(giangVien.getUser().getId(), giangVien.getId());
         if(exP.isPresent()){
             throw new MessageException("Tài khoản đã được sử dụng cho giảng viên khác");
         }
@@ -62,17 +59,17 @@ public class GiangVienService {
         return page;
     }
 
-    public void delete(Long maCb){
+    public void delete(Long id){
         try {
-            giangVienRepository.deleteById(maCb);
+            giangVienRepository.deleteById(id);
         }
         catch (Exception e){
             throw new MessageException("Giảng viên đã có liên kết không thể xóa");
         }
     }
 
-    public GiangVien findByMaCb(Long maCb) {
-        return giangVienRepository.findById(maCb).get();
+    public GiangVien findById(Long id) {
+        return giangVienRepository.findById(id).get();
     }
 
     public List<GiangVien> findAll() {
@@ -82,7 +79,7 @@ public class GiangVienService {
     public List<GiangVien> findAllByChuyenNganh() {
         User user = userUtils.getUserWithAuthority();
         GiangVien giangVien = giangVienRepository.findByUserId(user.getId()).get();
-        List<GiangVien> list = giangVienRepository.findByChuyenNganh(giangVien.getChuyenNganh().getMaChuyenNganh());
+        List<GiangVien> list = giangVienRepository.findByChuyenNganh();
         return list;
     }
 
@@ -95,7 +92,7 @@ public class GiangVienService {
         giangVien.setMaCB(gv.get().getMaCB());
         giangVien.setUser(gv.get().getUser());
         giangVien.setDangHopDong(gv.get().getDangHopDong());
-        giangVien.setChuyenNganh(gv.get().getChuyenNganh());
+        giangVien.setBoMon(gv.get().getBoMon());
         return giangVienRepository.save(giangVien);
     }
 

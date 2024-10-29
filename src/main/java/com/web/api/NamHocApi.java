@@ -2,7 +2,6 @@ package com.web.api;
 
 import com.web.entity.KhoaHoc;
 import com.web.entity.NamHoc;
-import com.web.service.KhoaHocService;
 import com.web.service.NamHocService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

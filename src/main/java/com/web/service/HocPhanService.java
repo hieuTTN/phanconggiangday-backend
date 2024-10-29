@@ -20,7 +20,7 @@ public class HocPhanService {
     private HocPhanRepository hocPhanRepository;
 
     public HocPhan save(HocPhan hocPhan){
-        Optional<HocPhan> ex = hocPhanRepository.findById(hocPhan.getMaHP());
+        Optional<HocPhan> ex = hocPhanRepository.findByMaHp(hocPhan.getMaHP());
         if(ex.isPresent()){
             throw new MessageException("Mã học phần đã tồn tại");
         }
@@ -29,9 +29,9 @@ public class HocPhanService {
     }
 
     public HocPhan update(HocPhan hocPhan){
-        Optional<HocPhan> ex = hocPhanRepository.findById(hocPhan.getMaHP());
-        if(ex.isEmpty()){
-            throw new MessageException("Mã học phần không tồn tại");
+        Optional<HocPhan> ex = hocPhanRepository.findByMaHpAndId(hocPhan.getMaHP(), hocPhan.getId());
+        if(ex.isPresent()){
+            throw new MessageException("Mã học phần đã tồn tại");
         }
         hocPhanRepository.save(hocPhan);
         return hocPhan;
@@ -52,16 +52,16 @@ public class HocPhanService {
         return hocPhanRepository.findAll();
     }
 
-    public void delete(Long maHp){
+    public void delete(Long id){
         try {
-            hocPhanRepository.deleteById(maHp);
+            hocPhanRepository.deleteById(id);
         }
         catch (Exception e){
             throw new MessageException("Học phần này đã được dùng không thể xóa");
         }
     }
 
-    public HocPhan findByMaHp(Long maHp) {
-        return hocPhanRepository.findById(maHp).get();
+    public HocPhan findByMaHp(Long id) {
+        return hocPhanRepository.findById(id).get();
     }
 }

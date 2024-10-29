@@ -1,9 +1,7 @@
 package com.web.api;
 
 import com.web.entity.GiangVien;
-import com.web.entity.HocPhan;
 import com.web.service.GiangVienService;
-import com.web.service.HocPhanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,14 +52,14 @@ public class GiangVienApi {
     }
 
     @DeleteMapping("/admin/delete")
-    public void delete(@RequestParam("maCb") Long maCb){
-        giangVienService.delete(maCb);
+    public void delete(@RequestParam Long id){
+        giangVienService.delete(id);
     }
 
 
-    @GetMapping("/all/find-by-macb")
-    public ResponseEntity<?> findByMaHp(@RequestParam("maCb") Long maCb) {
-        GiangVien result = giangVienService.findByMaCb(maCb);
+    @GetMapping("/all/find-by-id")
+    public ResponseEntity<?> findByMaHp(@RequestParam Long id) {
+        GiangVien result = giangVienService.findById(id);
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
 

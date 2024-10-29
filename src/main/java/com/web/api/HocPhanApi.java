@@ -46,13 +46,13 @@ public class HocPhanApi {
     }
 
     @DeleteMapping("/admin/delete")
-    public void delete(@RequestParam("maHp") Long maHp){
-        hocPhanService.delete(maHp);
+    public void delete(@RequestParam Long id){
+        hocPhanService.delete(id);
     }
 
-    @GetMapping("/all/find-by-mahp")
-    public ResponseEntity<?> findByMaHp(@RequestParam("maHp") Long maHp) {
-        HocPhan result = hocPhanService.findByMaHp(maHp);
+    @GetMapping("/all/find-by-id")
+    public ResponseEntity<?> findById(@RequestParam Long id) {
+        HocPhan result = hocPhanService.findByMaHp(id);
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
 

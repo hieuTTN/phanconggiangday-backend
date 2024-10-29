@@ -12,8 +12,8 @@ import javax.persistence.*;
 public class Nganh {
 
     @Id
-    @Column(name = "ma_nganh")
-    private String maNganh;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String tenNganh;
 }

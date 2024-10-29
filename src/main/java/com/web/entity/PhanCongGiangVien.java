@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import com.web.enums.LoaiNhom;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,19 +15,18 @@ public class PhanCongGiangVien {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Long id;
 
-    @Column(name = "soNhom")
     private Integer soNhom;
+
+    @Enumerated(EnumType.STRING)
+    private LoaiNhom loaiNhom;
 
     private LocalDateTime ngayCapNhat;
 
     @ManyToOne
-    @JoinColumn(name = "KeHoachMoMon")
-    private KeHoachMoMon keHoachMoMon;
+    private KeHoachChiTiet keHoachChiTiet;
 
     @ManyToOne
-    @JoinColumn(name = "MaCB")
     private GiangVien giangVien;
 }

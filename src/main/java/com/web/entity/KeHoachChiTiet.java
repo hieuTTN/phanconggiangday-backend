@@ -6,18 +6,24 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "giang_vien_hoc_phan")
+@Table(name = "ke_hoach_chi_tiet")
 @Getter
 @Setter
-public class GiangVienHocPhan {
+public class KeHoachChiTiet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private GiangVien giangVien;
+    private Integer soLuongSinhVienNhom;
+
+    private Integer tongSoNhom;
+
+    private Integer tongSinhVien;
 
     @ManyToOne
     private HocPhan hocPhan;
+
+    @ManyToOne
+    private KeHoachMoMon keHoachMoMon;
 }

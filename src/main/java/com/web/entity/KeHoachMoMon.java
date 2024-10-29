@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,37 +17,16 @@ public class KeHoachMoMon {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Long id;
 
-    @Column(name = "TongSoNhom")
-    private Integer tongSoNhom;
-
-    @Column(name = "SoLuongSinhVienNhom")
-    private Integer soLuongSinhVienNhom;
-
-    private Integer tongSoSinhVien;
+    private LocalDateTime ngayTao;
 
     @ManyToOne
-    @JoinColumn(name = "KhoaHoc")
-    private KhoaHoc khoaHoc;
-
-    @ManyToOne
-    @JoinColumn(name = "lopHoc")
-    private LopHoc lopHoc;
-
-    @ManyToOne
-    @JoinColumn(name = "NamHoc")
     private NamHoc namHoc;
 
     @ManyToOne
-    @JoinColumn(name = "MaHP")
-    private HocPhan hocPhan;
+    private KhoaHoc khoaHoc;
 
-    @OneToMany(mappedBy = "keHoachMoMon", cascade = CascadeType.REMOVE)
-    @JsonManagedReference
-    private List<KeHoachMoMonNganh> keHoachMoMonNganhs;
-
-    @Transient
-    private List<String> listMaNganh = new ArrayList<>();
+    @ManyToOne
+    private HocKy hocKy;
 }

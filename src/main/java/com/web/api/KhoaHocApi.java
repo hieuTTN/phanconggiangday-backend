@@ -37,14 +37,8 @@ public class KhoaHocApi {
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
 
-    @PostMapping("/admin/update")
-    public ResponseEntity<?> update(@RequestBody KhoaHoc khoaHoc) {
-        KhoaHoc result = khoaHocService.update(khoaHoc);
-        return new ResponseEntity(result, HttpStatus.CREATED);
-    }
-
     @DeleteMapping("/admin/delete")
-    public void delete(@RequestParam("maKh") String maKh){
-        khoaHocService.delete(maKh);
+    public void delete(@RequestParam("maKh") Long id){
+        khoaHocService.delete(id);
     }
 }
