@@ -64,4 +64,8 @@ public class HocPhanService {
     public HocPhan findByMaHp(Long id) {
         return hocPhanRepository.findById(id).get();
     }
+
+    public List<HocPhan> getAllListOutKeHoachHoc(Long keHoachHocId) {
+        return hocPhanRepository.getAllListOutKeHoachHoc(keHoachHocId);
+    }
 }

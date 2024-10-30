@@ -56,4 +56,9 @@ public class HocPhanApi {
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
 
+    @GetMapping("/all/find-all-list-by-kehoachhoc")
+    public ResponseEntity<?> getAllListOutKeHoachHoc(@RequestParam Long keHoachHocId){
+        List<HocPhan> result = hocPhanService.getAllListOutKeHoachHoc(keHoachHocId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
