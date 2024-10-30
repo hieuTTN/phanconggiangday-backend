@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3307
--- Thời gian đã tạo: Th10 29, 2024 lúc 04:04 PM
+-- Thời gian đã tạo: Th10 30, 2024 lúc 11:44 AM
 -- Phiên bản máy phục vụ: 8.0.30
 -- Phiên bản PHP: 8.1.10
 
@@ -89,7 +89,8 @@ CREATE TABLE `bo_mon` (
 INSERT INTO `bo_mon` (`id`, `ten_bo_mon`) VALUES
 (1, 'Bộ môn Công nghệ Phần mềm'),
 (2, 'Bộ môn Hệ thống Thông tin'),
-(3, 'Bộ môn Khoa học Máy tính');
+(3, 'Bộ môn Khoa học Máy tính'),
+(4, 'Bộ môn Kỹ thuật máy tính');
 
 -- --------------------------------------------------------
 
@@ -103,6 +104,21 @@ CREATE TABLE `chi_tiet_hoc` (
   `hoc_phan_id` bigint DEFAULT NULL,
   `ke_hoach_hoc_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `chi_tiet_hoc`
+--
+
+INSERT INTO `chi_tiet_hoc` (`id`, `hoc_ky_id`, `hoc_phan_id`, `ke_hoach_hoc_id`) VALUES
+(1, 1, 2, 1),
+(2, 1, 3, 1),
+(3, 1, 4, 1),
+(4, 1, 5, 1),
+(5, 1, 6, 1),
+(6, 1, 7, 1),
+(7, 1, 8, 1),
+(8, 1, 9, 1),
+(9, 1, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -312,6 +328,18 @@ CREATE TABLE `giang_vien_hoc_phan` (
   `hoc_phan_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `giang_vien_hoc_phan`
+--
+
+INSERT INTO `giang_vien_hoc_phan` (`id`, `giang_vien_id`, `hoc_phan_id`) VALUES
+(1, 169, 11),
+(2, 169, 18),
+(3, 169, 19),
+(4, 169, 20),
+(5, 169, 31),
+(6, 169, 36);
+
 -- --------------------------------------------------------
 
 --
@@ -322,6 +350,24 @@ CREATE TABLE `hoc_ky` (
   `id` bigint NOT NULL,
   `ten_hoc_ky` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `hoc_ky`
+--
+
+INSERT INTO `hoc_ky` (`id`, `ten_hoc_ky`) VALUES
+(1, 'Học kỳ 1'),
+(2, 'Học kỳ 2'),
+(3, 'Học kỳ 3'),
+(4, 'Học kỳ 4'),
+(5, 'Học kỳ 5'),
+(6, 'Học kỳ 6'),
+(7, 'Học kỳ 7'),
+(8, 'Học kỳ 8'),
+(9, 'Học kỳ 9'),
+(10, 'Học kỳ 10'),
+(11, 'Học kỳ 11'),
+(12, 'Học kỳ 12');
 
 -- --------------------------------------------------------
 
@@ -349,123 +395,122 @@ INSERT INTO `hoc_phan` (`id`, `he_so`, `mahp`, `so_tiet_ly_thuyet`, `so_tiet_thu
 (2, 1, '100000', 45, 0, 3, 'Công nghệ thông tin và kỷ nguyên số', 45, NULL),
 (3, 1, '100001', 45, 0, 3, 'Giới thiệu ngành CNTT', 45, NULL),
 (4, 1, '833070', 30, 0, 2, 'Tin học ứng dụng (QTKD)', 30, NULL),
-(5, 0.75, '841021', 30, 30, 3, 'Kiến trúc máy tính', 60, NULL),
-(6, 0.75, '841022', 30, 30, 3, 'Hệ điều hành', 60, NULL),
-(7, 0.75, '841040', 30, 30, 3, 'Kỹ thuật lập trình (cũ)', 60, NULL),
-(8, 0.8, '841044', 45, 30, 4, 'Lập trình hướng đối tượng', 75, NULL),
-(9, 0.75, '841046', 30, 30, 3, 'Phát triển ứng dụng web 2', 60, NULL),
-(10, 0.8, '841047', 45, 30, 4, 'Công nghệ phần mềm', 75, NULL),
-(11, 0.8, '841048', 45, 30, 4, 'Phân tích thiết kế HTTT', 75, NULL),
-(12, 0.75, '841051', 30, 30, 3, 'Thiết kế giao diện', 60, NULL),
-(13, 0.75, '841052', 30, 30, 3, 'Xây dựng phần mềm theo mô hình phân lớp', 60, NULL),
-(14, 0.75, '841058', 30, 30, 3, 'Hệ điều hành mã nguồn mở', 60, NULL),
-(15, 0.75, '841059', 30, 30, 3, 'Quản trị mạng', 60, NULL),
-(16, 0.75, '841061', 30, 30, 3, 'Mạng máy tính nâng cao (cũ)', 60, NULL),
-(17, 0.75, '841062', 30, 30, 3, 'Quản lý dự án công nghệ thông tin', 60, NULL),
-(18, 0.75, '841065', 30, 30, 3, 'Các hệ quản trị cơ sở dữ liệu', 60, NULL),
-(19, 0.8, '841067', 30, 30, 3, 'Thương mại điện tử & ứng dụng', 60, NULL),
-(20, 0.75, '841068', 30, 30, 3, 'Hệ thống thông tin doanh nghiệp', 60, NULL),
+(5, 0.75, '841021', 30, 30, 3, 'Kiến trúc máy tính', 60, 4),
+(6, 0.75, '841022', 30, 30, 3, 'Hệ điều hành', 60, 4),
+(7, 0.75, '841040', 30, 30, 3, 'Kỹ thuật lập trình (cũ)', 60, 3),
+(8, 0.8, '841044', 45, 30, 4, 'Lập trình hướng đối tượng', 75, 1),
+(9, 0.75, '841046', 30, 30, 3, 'Phát triển ứng dụng web 2', 60, 1),
+(10, 0.8, '841047', 45, 30, 4, 'Công nghệ phần mềm', 75, 1),
+(11, 0.8, '841048', 45, 30, 4, 'Phân tích thiết kế HTTT', 75, 2),
+(12, 0.75, '841051', 30, 30, 3, 'Thiết kế giao diện', 60, 1),
+(13, 0.75, '841052', 30, 30, 3, 'Xây dựng phần mềm theo mô hình phân lớp', 60, 1),
+(14, 0.75, '841058', 30, 30, 3, 'Hệ điều hành mã nguồn mở', 60, 4),
+(15, 0.75, '841059', 30, 30, 3, 'Quản trị mạng', 60, 4),
+(16, 0.75, '841061', 30, 30, 3, 'Mạng máy tính nâng cao (cũ)', 60, 4),
+(17, 0.75, '841062', 30, 30, 3, 'Quản lý dự án công nghệ thông tin', 60, 1),
+(18, 0.75, '841065', 30, 30, 3, 'Các hệ quản trị cơ sở dữ liệu', 60, 2),
+(19, 0.8, '841067', 30, 30, 3, 'Thương mại điện tử & ứng dụng', 60, 2),
+(20, 0.75, '841068', 30, 30, 3, 'Hệ thống thông tin doanh nghiệp', 60, 2),
 (21, 1, '841070', 18, 0, 6, 'Thực tập tốt nghiệp (8 tuần)', 18, NULL),
-(22, 1, '841071', 30, 15, 3, 'Dịch vụ web & ứng dụng', 45, NULL),
-(23, 0.75, '841072', 30, 30, 3, 'Các công nghệ lập trình hiện đại', 60, NULL),
-(24, 0.75, '841076', 30, 30, 3, 'Công nghệ phần mềm nâng cao', 60, NULL),
+(22, 1, '841071', 30, 15, 3, 'Dịch vụ web & ứng dụng', 45, 1),
+(23, 0.75, '841072', 30, 30, 3, 'Các công nghệ lập trình hiện đại', 60, 1),
+(24, 0.75, '841076', 30, 30, 3, 'Công nghệ phần mềm nâng cao', 60, 1),
 (25, 1, '841101', 60, 0, 4, 'Đại số', 60, NULL),
-(26, 0.75, '841103', 30, 30, 3, 'Lý thuyết đồ thị (cũ)', 60, NULL),
-(27, 0.8, '841107', 45, 30, 4, 'Lập trình Java', 75, NULL),
-(28, 0.8, '841108', 45, 30, 4, 'Cấu trúc dữ liệu và giải thuật', 75, NULL),
-(29, 0.8, '841109', 45, 30, 4, 'Cơ sở dữ liệu', 75, NULL),
-(30, 0.8, '841110', 45, 30, 4, 'Cơ sở trí tuệ nhân tạo', 75, NULL),
-(31, 0.8, '841111', 45, 30, 4, 'Phân tích thiết kế hướng đối tượng', 75, NULL),
-(32, 0.75, '841113', 30, 30, 3, 'Phát triển phần mềm mã nguồn mở', 60, NULL),
-(33, 0.75, '841114', 30, 30, 3, 'Phát triển ứng dụng trên thiết bị di động (cũ)', 60, NULL),
-(34, 0.75, '841116', 30, 30, 3, 'Đồ họa máy tính', 60, NULL),
-(35, 0.8, '841119', 45, 30, 4, 'An ninh mạng máy tính', 75, NULL),
-(36, 0.75, '841120', 30, 30, 3, 'An toàn bảo mật dữ liệu trong HTTT', 60, NULL),
-(37, 0.8, '841121', 45, 30, 4, 'Cơ sở dữ liệu phân tán', 75, NULL),
+(26, 0.75, '841103', 30, 30, 3, 'Lý thuyết đồ thị (cũ)', 60, 3),
+(27, 0.8, '841107', 45, 30, 4, 'Lập trình Java', 75, 1),
+(28, 0.8, '841108', 45, 30, 4, 'Cấu trúc dữ liệu và giải thuật', 75, 3),
+(29, 0.8, '841109', 45, 30, 4, 'Cơ sở dữ liệu', 75, 3),
+(30, 0.8, '841110', 45, 30, 4, 'Cơ sở trí tuệ nhân tạo', 75, 3),
+(31, 0.8, '841111', 45, 30, 4, 'Phân tích thiết kế hướng đối tượng', 75, 2),
+(32, 0.75, '841113', 30, 30, 3, 'Phát triển phần mềm mã nguồn mở', 60, 1),
+(33, 0.75, '841114', 30, 30, 3, 'Phát triển ứng dụng trên thiết bị di động (cũ)', 60, 1),
+(34, 0.75, '841116', 30, 30, 3, 'Đồ họa máy tính', 60, 3),
+(35, 0.8, '841119', 45, 30, 4, 'An ninh mạng máy tính', 75, 4),
+(36, 0.75, '841120', 30, 30, 3, 'An toàn bảo mật dữ liệu trong HTTT', 60, 2),
+(37, 0.8, '841121', 45, 30, 4, 'Cơ sở dữ liệu phân tán', 75, 2),
 (38, 1, '841301', 60, 0, 4, 'Giải tích', 60, NULL),
-(39, 0.8, '841302', 45, 30, 4, 'Cơ sở lập trình', 75, NULL),
-(40, 0.8, '841303', 45, 30, 4, 'Kỹ thuật lập trình', 75, NULL),
-(41, 0.75, '841304', 30, 30, 3, 'Phát triển ứng dụng web 1', 60, NULL),
-(42, 0.75, '841307', 30, 30, 3, 'Lập trình mạng', 60, NULL),
-(43, 0.75, '841308', 30, 30, 3, 'Khai phá dữ liệu', 60, NULL),
-(44, 1, '841309', 45, 0, 3, 'Toán rời rạc', 45, NULL),
-(45, 1, '841310', 45, 0, 3, 'Lý thuyết đồ thị', 45, NULL),
-(50, 1, '841315', 45, 0, 3, 'Kỹ năng nghề nghiệp ngành CNTT', 45, NULL),
-(51, 0.75, '841316', 30, 30, 3, 'Kiến thức nền tảng về bảo mật', 60, NULL),
-(52, 1, '841317', 45, 0, 3, 'Đồ án chuẩn bị tốt nghiệp', 45, NULL),
-(53, 0.75, '841318', 30, 30, 3, 'Phát triển hệ thống nhúng', 60, NULL),
-(54, 0.75, '841319', 30, 30, 3, 'An toàn mạng không dây và di động', 60, NULL),
-(55, 0.75, '841320', 30, 30, 3, 'Phát triển ứng dụng internet of things', 60, NULL),
-(56, 0.75, '841321', 30, 30, 3, 'Thiết kế hệ thống mạng', 60, NULL),
-(57, 1, '841322', 60, 0, 4, 'Máy học', 60, NULL),
-(58, 0.75, '841323', 30, 30, 3, 'Điện toán đám mây', 60, NULL),
-(59, 1, '841324', 30, 0, 2, 'Phương pháp luận nghiên cứu khoa học', 30, NULL),
-(60, 1, '841328', 60, 0, 4, 'Seminar Công nghệ phần mềm', 60, NULL),
+(39, 0.8, '841302', 45, 30, 4, 'Cơ sở lập trình', 75, 3),
+(40, 0.8, '841303', 45, 30, 4, 'Kỹ thuật lập trình', 75, 3),
+(41, 0.75, '841304', 30, 30, 3, 'Phát triển ứng dụng web 1', 60, 1),
+(42, 0.75, '841307', 30, 30, 3, 'Lập trình mạng', 60, 4),
+(43, 0.75, '841308', 30, 30, 3, 'Khai phá dữ liệu', 60, 3),
+(44, 1, '841309', 45, 0, 3, 'Toán rời rạc', 45, 3),
+(45, 1, '841310', 45, 0, 3, 'Lý thuyết đồ thị', 45, 3),
+(50, 1, '841315', 45, 0, 3, 'Kỹ năng nghề nghiệp ngành CNTT', 45, 2),
+(51, 0.75, '841316', 30, 30, 3, 'Kiến thức nền tảng về bảo mật', 60, 2),
+(52, 1, '841317', 45, 0, 3, 'Đồ án chuẩn bị tốt nghiệp', 45, 1),
+(53, 0.75, '841318', 30, 30, 3, 'Phát triển hệ thống nhúng', 60, 1),
+(54, 0.75, '841319', 30, 30, 3, 'An toàn mạng không dây và di động', 60, 4),
+(55, 0.75, '841320', 30, 30, 3, 'Phát triển ứng dụng internet of things', 60, 1),
+(56, 0.75, '841321', 30, 30, 3, 'Thiết kế hệ thống mạng', 60, 4),
+(57, 1, '841322', 60, 0, 4, 'Máy học', 60, 3),
+(58, 0.75, '841323', 30, 30, 3, 'Điện toán đám mây', 60, 1),
+(59, 1, '841324', 30, 0, 2, 'Phương pháp luận nghiên cứu khoa học', 30, 3),
+(60, 1, '841328', 60, 0, 4, 'Seminar Công nghệ phần mềm', 60, 2),
 (61, 1, '841401', 45, 0, 3, 'Giải tích 1', 45, NULL),
 (62, 1, '841402', 45, 0, 3, 'Đại số tuyến tính', 45, NULL),
-(63, 1, '841403', 60, 0, 4, 'Cấu trúc rời rạc', 60, NULL),
-(64, 0.75, '841404', 30, 30, 3, 'Mạng máy tính', 60, NULL),
+(63, 1, '841403', 60, 0, 4, 'Cấu trúc rời rạc', 60, 3),
+(64, 0.75, '841404', 30, 30, 3, 'Mạng máy tính', 60, 4),
 (65, 1, '841405', 45, 0, 3, 'Xác suất thống kê', 45, NULL),
 (66, 1, '841406', 45, 0, 3, 'Giải tích 2', 45, NULL),
-(67, 0.8, '841407', 45, 30, 4, 'Các hệ quản trị cơ sở dữ liệu (2020)', 75, NULL),
-(68, 0.8, '841408', 45, 30, 4, 'Kiểm thử phần mềm', 75, NULL),
-(69, 1, '841409', 60, 0, 4, 'Mạng máy tính nâng cao', 60, NULL),
-(70, 0.8, '841410', 45, 30, 4, 'An ninh mạng máy tính (2020)', 75, NULL),
-(71, 0.8, '841411', 45, 30, 4, 'Quản trị mạng (2020)', 75, NULL),
-(72, 0.8, '841413', 45, 30, 4, 'Cơ sở dữ liệu phân tán (2020)', 75, NULL),
-(73, 1, '841414', 45, 0, 3, 'Thiết kế và phân tích giải thuật', 45, NULL),
+(67, 0.8, '841407', 45, 30, 4, 'Các hệ quản trị cơ sở dữ liệu (2020)', 75, 2),
+(68, 0.8, '841408', 45, 30, 4, 'Kiểm thử phần mềm', 75, 1),
+(69, 1, '841409', 60, 0, 4, 'Mạng máy tính nâng cao', 60, 4),
+(70, 0.8, '841410', 45, 30, 4, 'An ninh mạng máy tính (2020)', 75, 4),
+(71, 0.8, '841411', 45, 30, 4, 'Quản trị mạng (2020)', 75, 4),
+(72, 0.8, '841413', 45, 30, 4, 'Cơ sở dữ liệu phân tán (2020)', 75, 2),
+(73, 1, '841414', 45, 0, 3, 'Thiết kế và phân tích giải thuật', 45, 3),
 (74, 1, '841415', 30, 0, 2, 'Luật pháp và CNTT', 30, NULL),
 (75, 0.67, '841417', 15, 30, 2, 'Mỹ thuật ứng dụng trong CNTT', 45, NULL),
-(76, 0.8, '841419', 45, 30, 4, 'Lập trình web và ứng dụng', 75, NULL),
-(77, 0.8, '841422', 45, 30, 4, 'Ngôn ngữ lập trình Python', 75, NULL),
-(78, 0.8, '841423', 45, 30, 4, 'Ngôn ngữ Lập trình c#', 75, NULL),
-(79, 0.8, '841429', 45, 30, 4, 'Cơ sở dữ liệu nâng cao', 75, NULL),
-(80, 1, '841430', 30, 0, 2, 'Nguyên lý và phương pháp lập trình', 30, NULL),
-(81, 0.8, '841431', 45, 30, 4, 'Quản lý dự án phần mềm', 75, NULL),
-(82, 0.8, '841432', 45, 30, 4, 'Phân tích dữ liệu', 75, NULL),
-(83, 0.8, '841434', 45, 30, 4, 'Thương mại diện tử và ứng dụng', 75, NULL),
-(84, 0.8, '841438', 45, 30, 4, 'Lập trình ứng dụng mạng', 75, NULL),
-(85, 0.8, '841439', 45, 30, 4, 'Mạng không dây', 75, NULL),
-(86, 0.8, '841440', 45, 30, 4, 'Phân tích và thiết kế mạng máy tính', 75, NULL),
-(87, 1, '841442', 45, 0, 3, 'Mạng đa phương tiện và di động', 45, NULL),
-(88, 1, '841443', 45, 0, 3, 'Phân tích mạng truyền thông và xã hội', 45, NULL),
-(89, 1, '841444', 45, 0, 3, 'Quản trị và bảo trì hệ thống', 45, NULL),
-(90, 1, '841445', 45, 0, 3, 'Hệ thống ảo và khả năng mở rộng dữ liệu', 45, NULL),
-(91, 0.8, '841446', 45, 30, 4, 'Phân tích và xử lý ảnh', 75, NULL),
-(92, 0.8, '841447', 45, 30, 4, 'Khai thác dữ liệu và ứng dụng', 75, NULL),
-(93, 0.8, '841448', 45, 30, 4, 'Xử lý ngôn ngữ tự nhiên', 75, NULL),
-(94, 0.8, '841449', 45, 30, 4, 'Nhập môn máy học', 75, NULL),
-(95, 1, '841452', 45, 0, 3, 'Tính toán thông minh', 45, NULL),
-(96, 0.8, '841453', 45, 30, 4, 'Phân tích và nhận dạng mẫu', 75, NULL),
-(97, 0.8, '841456', 45, 30, 4, 'Công nghệ tri thức', 75, NULL),
-(98, 0.8, '841457', 45, 30, 4, 'Học Sâu', 75, NULL),
-(99, 0.8, '841458', 45, 30, 4, 'Trí tuệ nhân tạo nâng cao', 75, NULL),
-(100, 0.8, '841461', 45, 30, 4, 'Nhập môn phát triển ứng dụng trên thiết bị di động', 75, NULL),
-(101, 0.8, '841462', 45, 30, 4, 'Phát triển ứng dụng trên thiết bị di động', 75, NULL),
-(102, 0.8, '841463', 45, 30, 4, 'Phát triển ứng dụng trên thiết bị di động nâng cao', 75, NULL),
-(103, 0.8, '841464', 45, 30, 4, 'Lập trình web và ứng dụng nâng cao', 75, NULL),
-(104, 0.8, '841467', 45, 30, 4, 'Công nghệ .NET', 75, NULL),
-(105, 0.8, '841468', 45, 30, 4, 'Chuyên đề J2EE', 75, NULL),
-(106, 1, '841476', 60, 0, 4, 'Đồ án chuyên ngành', 60, NULL),
-(107, 0.8, '841479', 45, 30, 4, 'Kiến trúc phần mềm', 75, NULL),
-(108, 0.8, '841480', 45, 30, 4, 'Xây dựng phần mềm theo mô hình phân lớp (2020)', 75, NULL),
-(109, 0.8, '841481', 45, 30, 4, 'Thiết kế giao diện (2020)', 75, NULL),
-(110, 1, '841482', 45, 0, 3, 'Seminar chuyên đề', 45, NULL),
-(111, 1, '841483', 60, 0, 4, 'Mạng đa phương tiện và di động (KTPM)', 60, NULL),
+(76, 0.8, '841419', 45, 30, 4, 'Lập trình web và ứng dụng', 75, 1),
+(77, 0.8, '841422', 45, 30, 4, 'Ngôn ngữ lập trình Python', 75, 3),
+(78, 0.8, '841423', 45, 30, 4, 'Ngôn ngữ Lập trình c#', 75, 1),
+(79, 0.8, '841429', 45, 30, 4, 'Cơ sở dữ liệu nâng cao', 75, 2),
+(80, 1, '841430', 30, 0, 2, 'Nguyên lý và phương pháp lập trình', 30, 1),
+(81, 0.8, '841431', 45, 30, 4, 'Quản lý dự án phần mềm', 75, 1),
+(82, 0.8, '841432', 45, 30, 4, 'Phân tích dữ liệu', 75, 2),
+(83, 0.8, '841434', 45, 30, 4, 'Thương mại diện tử và ứng dụng', 75, 2),
+(84, 0.8, '841438', 45, 30, 4, 'Lập trình ứng dụng mạng', 75, 4),
+(85, 0.8, '841439', 45, 30, 4, 'Mạng không dây', 75, 4),
+(86, 0.8, '841440', 45, 30, 4, 'Phân tích và thiết kế mạng máy tính', 75, 4),
+(87, 1, '841442', 45, 0, 3, 'Mạng đa phương tiện và di động', 45, 4),
+(88, 1, '841443', 45, 0, 3, 'Phân tích mạng truyền thông và xã hội', 45, 4),
+(89, 1, '841444', 45, 0, 3, 'Quản trị và bảo trì hệ thống', 45, 2),
+(90, 1, '841445', 45, 0, 3, 'Hệ thống ảo và khả năng mở rộng dữ liệu', 45, 2),
+(91, 0.8, '841446', 45, 30, 4, 'Phân tích và xử lý ảnh', 75, 3),
+(92, 0.8, '841447', 45, 30, 4, 'Khai thác dữ liệu và ứng dụng', 75, 3),
+(93, 0.8, '841448', 45, 30, 4, 'Xử lý ngôn ngữ tự nhiên', 75, 3),
+(94, 0.8, '841449', 45, 30, 4, 'Nhập môn máy học', 75, 3),
+(95, 1, '841452', 45, 0, 3, 'Tính toán thông minh', 45, 3),
+(96, 0.8, '841453', 45, 30, 4, 'Phân tích và nhận dạng mẫu', 75, 3),
+(97, 0.8, '841456', 45, 30, 4, 'Công nghệ tri thức', 75, 3),
+(98, 0.8, '841457', 45, 30, 4, 'Học Sâu', 75, 3),
+(99, 0.8, '841458', 45, 30, 4, 'Trí tuệ nhân tạo nâng cao', 75, 3),
+(100, 0.8, '841461', 45, 30, 4, 'Nhập môn phát triển ứng dụng trên thiết bị di động', 75, 1),
+(101, 0.8, '841462', 45, 30, 4, 'Phát triển ứng dụng trên thiết bị di động', 75, 1),
+(102, 0.8, '841463', 45, 30, 4, 'Phát triển ứng dụng trên thiết bị di động nâng cao', 75, 1),
+(103, 0.8, '841464', 45, 30, 4, 'Lập trình web và ứng dụng nâng cao', 75, 1),
+(104, 0.8, '841467', 45, 30, 4, 'Công nghệ .NET', 75, 1),
+(105, 0.8, '841468', 45, 30, 4, 'Chuyên đề J2EE', 75, 1),
+(106, 1, '841476', 60, 0, 4, 'Đồ án chuyên ngành', 60, 1),
+(107, 0.8, '841479', 45, 30, 4, 'Kiến trúc phần mềm', 75, 1),
+(108, 0.8, '841480', 45, 30, 4, 'Xây dựng phần mềm theo mô hình phân lớp (2020)', 75, 1),
+(109, 0.8, '841481', 45, 30, 4, 'Thiết kế giao diện (2020)', 75, 1),
+(110, 1, '841482', 45, 0, 3, 'Seminar chuyên đề', 45, 1),
+(111, 1, '841483', 60, 0, 4, 'Mạng đa phương tiện và di động (KTPM)', 60, 1),
 (112, 1, '848010', 45, 0, 4, 'Giải tích số', 60, NULL),
-(113, 1, '848013', 30, 15, 3, 'Kiến trúc máy tính và mạng máy tính', 45, NULL),
-(114, 1, '848024', 30, 15, 3, 'Bảo mật mạng máy tính', 45, NULL),
-(115, 0.8, '848028', 45, 30, 4, 'Phân tích và xử lý ảnh (Toán UD)', 75, NULL),
-(116, 1, '848301', 0, 30, 2, 'Seminar chuyên đề tin học 2', 30, NULL),
-(117, 0.8, '848411', 45, 30, 4, 'Seminar chuyên đề tin học 2', 75, NULL),
-(118, 1, '848412', 60, 0, 4, 'Máy học (ToanUD)', 60, NULL),
-(119, 1, '848416', 45, 0, 3, 'Khai thác dữ liệu (ToanUD)', 45, NULL),
-(120, 0.8, '858009', 45, 30, 4, 'Cơ sở lập trình (KHDL)', 75, NULL),
-(121, 0.8, '858010', 45, 30, 4, 'Cấu trúc dữ liệu và giải thuật (KHDL)', 75, NULL),
-(122, 0.75, '858011', 30, 30, 3, 'Phương pháp lập trình hướng đối tượng (KHDL)', 60, NULL),
-(123, 0.75, '858014', 30, 30, 3, 'Lập trình Python cơ bản (KHDL)', 60, NULL),
-(124, 0.75, '858015', 30, 30, 3, 'Máy học (KHDL)', 60, NULL),
-(136, 1, '865006', 30, 0, 2, 'Pháp luật đại cương', 30, 1);
+(113, 1, '848013', 30, 15, 3, 'Kiến trúc máy tính và mạng máy tính', 45, 4),
+(114, 1, '848024', 30, 15, 3, 'Bảo mật mạng máy tính', 45, 4),
+(115, 0.8, '848028', 45, 30, 4, 'Phân tích và xử lý ảnh (Toán UD)', 75, 3),
+(116, 1, '848301', 0, 30, 2, 'Seminar chuyên đề tin học 2', 30, 2),
+(117, 0.8, '848411', 45, 30, 4, 'Seminar chuyên đề tin học 2', 75, 2),
+(118, 1, '848412', 60, 0, 4, 'Máy học (ToanUD)', 60, 3),
+(119, 1, '848416', 45, 0, 3, 'Khai thác dữ liệu (ToanUD)', 45, 3),
+(120, 0.8, '858009', 45, 30, 4, 'Cơ sở lập trình (KHDL)', 75, 3),
+(121, 0.8, '858010', 45, 30, 4, 'Cấu trúc dữ liệu và giải thuật (KHDL)', 75, 3),
+(122, 0.75, '858011', 30, 30, 3, 'Phương pháp lập trình hướng đối tượng (KHDL)', 60, 1),
+(123, 0.75, '858014', 30, 30, 3, 'Lập trình Python cơ bản (KHDL)', 60, 3),
+(124, 0.75, '858015', 30, 30, 3, 'Máy học (KHDL)', 60, 3);
 
 -- --------------------------------------------------------
 
@@ -494,6 +539,24 @@ CREATE TABLE `ke_hoach_hoc` (
   `nganh_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `ke_hoach_hoc`
+--
+
+INSERT INTO `ke_hoach_hoc` (`id`, `khoa_hoc_id`, `nganh_id`) VALUES
+(1, 8, 1),
+(2, 8, 2),
+(3, 8, 3),
+(4, 8, 4),
+(5, 7, 1),
+(6, 7, 2),
+(7, 7, 3),
+(8, 7, 4),
+(9, 6, 1),
+(10, 6, 2),
+(11, 6, 3),
+(13, 6, 4);
+
 -- --------------------------------------------------------
 
 --
@@ -505,7 +568,8 @@ CREATE TABLE `ke_hoach_mo_mon` (
   `ngay_tao` datetime DEFAULT NULL,
   `hoc_ky_id` bigint DEFAULT NULL,
   `khoa_hoc_id` bigint DEFAULT NULL,
-  `nam_hoc_id` bigint DEFAULT NULL
+  `nam_hoc_id` bigint DEFAULT NULL,
+  `nganh_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -564,6 +628,14 @@ CREATE TABLE `lop_hoc` (
   `nganh` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `lop_hoc`
+--
+
+INSERT INTO `lop_hoc` (`id`, `ma_lop`, `sosvnam`, `sosvnu`, `so_sinh_vien_hien_tai`, `ten_lop`, `khoa_hoc`, `nganh`) VALUES
+(1, 'LH001', NULL, NULL, 55, 'Lớp 001', 8, 1),
+(2, 'LH002', NULL, NULL, 50, 'Lớp 002', 8, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -603,7 +675,8 @@ CREATE TABLE `nganh` (
 INSERT INTO `nganh` (`id`, `ten_nganh`) VALUES
 (1, 'Công nghệ thông tin'),
 (2, 'Công nghệ thông tin CLC'),
-(3, 'Khoa học máy tính định hướng khoa học dữ liệu');
+(3, 'Kỹ thuật phần mềm'),
+(4, 'Trí tuệ nhân tạo');
 
 -- --------------------------------------------------------
 
@@ -734,7 +807,8 @@ ALTER TABLE `ke_hoach_mo_mon`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK6yth35cswnq6596t5vmcbsel0` (`hoc_ky_id`),
   ADD KEY `FKc7jud9xo4fejirjfrufki0d7b` (`khoa_hoc_id`),
-  ADD KEY `FKbpim2wv5q8qy0gy6tkge7jq3q` (`nam_hoc_id`);
+  ADD KEY `FKbpim2wv5q8qy0gy6tkge7jq3q` (`nam_hoc_id`),
+  ADD KEY `FK93qsllb072wfw6vtskq1xhncb` (`nganh_id`);
 
 --
 -- Chỉ mục cho bảng `ke_hoach_mo_mon_nganh`
@@ -799,31 +873,31 @@ ALTER TABLE `bai_viet`
 -- AUTO_INCREMENT cho bảng `bo_mon`
 --
 ALTER TABLE `bo_mon`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `chi_tiet_hoc`
 --
 ALTER TABLE `chi_tiet_hoc`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT cho bảng `giang_vien`
 --
 ALTER TABLE `giang_vien`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
 -- AUTO_INCREMENT cho bảng `giang_vien_hoc_phan`
 --
 ALTER TABLE `giang_vien_hoc_phan`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `hoc_ky`
 --
 ALTER TABLE `hoc_ky`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `hoc_phan`
@@ -841,7 +915,7 @@ ALTER TABLE `ke_hoach_chi_tiet`
 -- AUTO_INCREMENT cho bảng `ke_hoach_hoc`
 --
 ALTER TABLE `ke_hoach_hoc`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `ke_hoach_mo_mon`
@@ -865,7 +939,7 @@ ALTER TABLE `khoa_hoc`
 -- AUTO_INCREMENT cho bảng `lop_hoc`
 --
 ALTER TABLE `lop_hoc`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `nam_hoc`
@@ -877,7 +951,7 @@ ALTER TABLE `nam_hoc`
 -- AUTO_INCREMENT cho bảng `nganh`
 --
 ALTER TABLE `nganh`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `phan_cong_giang_vien`
@@ -948,6 +1022,7 @@ ALTER TABLE `ke_hoach_hoc`
 --
 ALTER TABLE `ke_hoach_mo_mon`
   ADD CONSTRAINT `FK6yth35cswnq6596t5vmcbsel0` FOREIGN KEY (`hoc_ky_id`) REFERENCES `hoc_ky` (`id`),
+  ADD CONSTRAINT `FK93qsllb072wfw6vtskq1xhncb` FOREIGN KEY (`nganh_id`) REFERENCES `nganh` (`id`),
   ADD CONSTRAINT `FKbpim2wv5q8qy0gy6tkge7jq3q` FOREIGN KEY (`nam_hoc_id`) REFERENCES `nam_hoc` (`id`),
   ADD CONSTRAINT `FKc7jud9xo4fejirjfrufki0d7b` FOREIGN KEY (`khoa_hoc_id`) REFERENCES `khoa_hoc` (`id`);
 

@@ -21,10 +21,6 @@ public class LopHoc {
 
     private Integer soSinhVienHienTai;
 
-    private Integer soSVNam ;
-
-    private Integer soSVNu ;
-
     @ManyToOne
     @JoinColumn(name = "KhoaHoc")
     private KhoaHoc	khoaHoc ;

@@ -75,6 +75,12 @@ public class GiangVienApi {
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
 
+    @GetMapping("/teacher/bo-mon-cua-toi")
+    public ResponseEntity<?> boMonCuaToi() {
+        String result = giangVienService.boMonCuaToi();
+        return new ResponseEntity(result, HttpStatus.CREATED);
+    }
+
     @PostMapping("/teacher/cap-nhat-thong-tin")
     public ResponseEntity<?> capNhatThongTin(@RequestBody GiangVien giangVien) {
         GiangVien result = giangVienService.capNhatThongTin(giangVien);

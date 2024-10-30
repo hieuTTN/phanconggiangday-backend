@@ -25,4 +25,7 @@ public interface HocPhanRepository extends JpaRepository<HocPhan, Long> {
             "LEFT JOIN chi_tiet_hoc cth ON cth.hoc_phan_id = hp.id AND cth.ke_hoach_hoc_id = ?1\n" +
             "WHERE cth.hoc_phan_id IS NULL;", nativeQuery = true)
     List<HocPhan> getAllListOutKeHoachHoc(Long keHoachHocId);
+
+    @Query("select h from HocPhan h where h.boMon.id = ?1")
+    List<HocPhan> findByBoMon(Long id);
 }

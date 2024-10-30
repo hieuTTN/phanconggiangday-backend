@@ -61,4 +61,10 @@ public class HocPhanApi {
         List<HocPhan> result = hocPhanService.getAllListOutKeHoachHoc(keHoachHocId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/teacher/find-by-giang-vien-bo-mon")
+    public ResponseEntity<?> getByGiangVien(){
+        List<HocPhan> result = hocPhanService.findByGiangVien();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

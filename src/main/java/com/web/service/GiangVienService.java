@@ -89,6 +89,7 @@ public class GiangVienService {
         if(gv.isEmpty()){
             throw new MessageException("Không tìm thấy giảng viên");
         }
+        giangVien.setId(gv.get().getId());
         giangVien.setMaCB(gv.get().getMaCB());
         giangVien.setUser(gv.get().getUser());
         giangVien.setDangHopDong(gv.get().getDangHopDong());
@@ -103,5 +104,11 @@ public class GiangVienService {
             throw new MessageException("Không tìm thấy giảng viên");
         }
         return gv.get();
+    }
+
+    public String boMonCuaToi() {
+        User user = userUtils.getUserWithAuthority();
+        String gv = giangVienRepository.boMonCuaToi(user.getId());
+        return gv;
     }
 }

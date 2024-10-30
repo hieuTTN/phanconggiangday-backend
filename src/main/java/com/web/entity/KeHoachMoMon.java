@@ -29,4 +29,7 @@ public class KeHoachMoMon {
 
     @ManyToOne
     private HocKy hocKy;
+
+    @ManyToOne
+    private Nganh nganh;
 }

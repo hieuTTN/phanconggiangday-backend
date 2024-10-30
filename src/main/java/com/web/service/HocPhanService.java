@@ -1,15 +1,20 @@
 package com.web.service;
 
+import com.web.entity.GiangVien;
 import com.web.entity.HocPhan;
 import com.web.entity.KhoaHoc;
+import com.web.entity.User;
 import com.web.exception.MessageException;
+import com.web.repository.GiangVienRepository;
 import com.web.repository.HocPhanRepository;
 import com.web.repository.KhoaHocRepository;
+import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +23,12 @@ public class HocPhanService {
 
     @Autowired
     private HocPhanRepository hocPhanRepository;
+
+    @Autowired
+    private GiangVienRepository giangVienRepository;
+
+    @Autowired
+    private UserUtils userUtils;
 
     public HocPhan save(HocPhan hocPhan){
         Optional<HocPhan> ex = hocPhanRepository.findByMaHp(hocPhan.getMaHP());
@@ -67,5 +78,14 @@ public class HocPhanService {
 
     public List<HocPhan> getAllListOutKeHoachHoc(Long keHoachHocId) {
         return hocPhanRepository.getAllListOutKeHoachHoc(keHoachHocId);
+    }
+
+    public List<HocPhan> findByGiangVien() {
+        User user = userUtils.getUserWithAuthority();
+        Optional<GiangVien> gv = giangVienRepository.findByUserId(user.getId());
+        if(gv.isEmpty()){
+            return new ArrayList<HocPhan>();
+        }
+        return hocPhanRepository.findByBoMon(gv.get().getBoMon().getId());
     }
 }

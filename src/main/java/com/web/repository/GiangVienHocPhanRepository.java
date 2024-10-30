@@ -10,9 +10,9 @@ import java.util.Optional;
 
 public interface GiangVienHocPhanRepository extends JpaRepository<GiangVienHocPhan, Long> {
 
-    @Query("select g from GiangVienHocPhan g where g.hocPhan.maHP = ?1 and g.giangVien.maCB = ?2")
-    Optional<GiangVienHocPhan> findByHocPhanAndGv(Long maHP, Long maCB);
+    @Query("select g from GiangVienHocPhan g where g.hocPhan.id = ?1 and g.giangVien.id = ?2")
+    Optional<GiangVienHocPhan> findByHocPhanAndGv(Long hpId, Long gvId);
 
-    @Query("select g from GiangVienHocPhan g where g.giangVien.maCB = ?1")
-    Page<GiangVienHocPhan> findByGiangVien(Long maCB, Pageable pageable);
+    @Query("select g from GiangVienHocPhan g where g.giangVien.id = ?1")
+    Page<GiangVienHocPhan> findByGiangVien(Long idgv, Pageable pageable);
 }

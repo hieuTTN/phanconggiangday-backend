@@ -14,6 +14,9 @@ public interface GiangVienRepository extends JpaRepository<GiangVien, Long> {
     @Query("select g from GiangVien g where g.user.id = ?1")
     Optional<GiangVien> findByUserId(Long userId);
 
+    @Query("select g.boMon.tenBoMon from GiangVien g where g.user.id = ?1")
+    String boMonCuaToi(Long userId);
+
     @Query("select g from GiangVien g where g.user.id = ?1 and g.id <> ?2")
     Optional<GiangVien> findByUserIdAndMaCb(Long userId, Long macb);
 
