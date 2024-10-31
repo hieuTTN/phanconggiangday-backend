@@ -16,4 +16,7 @@ public interface LopHocRepository extends JpaRepository<LopHoc, Long> {
 
     @Query("select l from LopHoc l where l.nganh.id = ?1 and l.khoaHoc.id = ?2")
     Page<LopHoc> findByNganhAndKhoaHoc(Long nganhId,Long khoaHocId, Pageable pageable);
+
+    @Query("select sum(l.soSinhVienHienTai) from LopHoc l where l.nganh.id = ?1")
+    Integer totalStudent(Long nganhId);
 }

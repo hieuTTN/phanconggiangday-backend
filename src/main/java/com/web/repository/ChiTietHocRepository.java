@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 public interface ChiTietHocRepository extends JpaRepository<ChiTietHoc, Long> {
@@ -25,4 +26,7 @@ public interface ChiTietHocRepository extends JpaRepository<ChiTietHoc, Long> {
 
     @Query("select c from ChiTietHoc c where c.keHoachHoc.id = ?1 and c.hocKy.id = ?2")
     Page<ChiTietHoc> findByKeHoachHocAndHocKy(Long keHoachHocId, Long hocKyId, Pageable pageable);
+
+    @Query("select c from ChiTietHoc c where c.keHoachHoc.nganh.id = ?1 and c.hocKy.id = ?2")
+    List<ChiTietHoc> findByNganhAndHocKy(Long id, Long hocKyId);
 }
