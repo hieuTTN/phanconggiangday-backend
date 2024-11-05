@@ -34,4 +34,7 @@ public interface GiangVienRepository extends JpaRepository<GiangVien, Long> {
 
     @Query("select g from GiangVien g where g.boMon.id = ?1")
     List<GiangVien> findByBoMon(Long boMonId);
+
+    @Query("select g from GiangVien g where g.boMon.id = ?1 and g.user.authorities.name = ?2")
+    GiangVien getTruongBoMon(Long boMonId, String authorName);
 }

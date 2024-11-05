@@ -8,6 +8,7 @@ import com.web.exception.MessageException;
 import com.web.repository.GiangVienHocPhanRepository;
 import com.web.repository.GiangVienRepository;
 import com.web.repository.PhanCongGiangVienRepository;
+import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -133,5 +134,10 @@ public class GiangVienService {
         Integer soNhomDay = phanCongGiangVienRepository.soNhomDay(idGv, namHocId);
         dto.setSoNhomDay(soNhomDay);
         return dto;
+    }
+
+    public GiangVien getTruongBoMon(Long boMonId){
+        GiangVien giangVien = giangVienRepository.getTruongBoMon(boMonId, Contains.ROLE_HEAD_DEPARTMENT);
+        return giangVien;
     }
 }

@@ -41,4 +41,10 @@ public class PhanCongGiangVienApi {
         Page<PhanCongGiangVien> result = phanCongGiangVienService.phanCongCuaToi(pageable, idNamHoc);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @PostMapping("/teacher/phan-hoi")
+    public ResponseEntity<?> phanHoi(@RequestBody String phanHoi, @RequestParam Long id) {
+        phanCongGiangVienService.phanHoi(phanHoi,id);
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
 }

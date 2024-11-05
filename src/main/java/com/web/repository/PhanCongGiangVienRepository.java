@@ -23,7 +23,7 @@ public interface PhanCongGiangVienRepository extends JpaRepository<PhanCongGiang
     @Query("select p from PhanCongGiangVien p where p.giangVien.id = ?1")
     Page<PhanCongGiangVien> findByGiangVien(Long idGv, Pageable pageable);
 
-    @Query("select p from PhanCongGiangVien p where p.giangVien.maCB = ?1 and p.keHoachChiTiet.namHoc.id = ?2")
+    @Query("select p from PhanCongGiangVien p where p.giangVien.id = ?1 and p.keHoachChiTiet.namHoc.id = ?2")
     Page<PhanCongGiangVien> findByGiangVienAndNamHoc(Long idGv ,Long namHocId, Pageable pageable);
 
     @Query("select sum(p.soNhom) from PhanCongGiangVien p where p.giangVien.id = ?1 and p.keHoachChiTiet.namHoc.id = ?2")

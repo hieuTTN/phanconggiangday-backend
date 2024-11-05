@@ -22,6 +22,10 @@ public class PhanCongGiangVien {
     @Enumerated(EnumType.STRING)
     private LoaiNhom loaiNhom;
 
+    private String phanHoi;
+
+    private LocalDateTime ngayPhanHoi;
+
     private LocalDateTime ngayCapNhat;
 
     @ManyToOne

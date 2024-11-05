@@ -7,6 +7,7 @@ import com.web.enums.LoaiNhom;
 import com.web.exception.MessageException;
 import com.web.repository.KeHoachChiTietRepository;
 import com.web.repository.PhanCongGiangVienRepository;
+import com.web.utils.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,9 @@ public class PhanCongGiangVienService {
 
     @Autowired
     private GiangVienService giangVienService;
+
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     private KeHoachChiTietRepository keHoachChiTietRepository;
@@ -93,4 +97,15 @@ public class PhanCongGiangVienService {
         return page;
     }
 
+    public void phanHoi(String noiDung, Long id){
+        PhanCongGiangVien phanCongGiangVien = phanCongGiangVienRepository.findById(id).get();
+        phanCongGiangVien.setPhanHoi(noiDung);
+        phanCongGiangVien.setNgayPhanHoi(LocalDateTime.now());
+        phanCongGiangVienRepository.save(phanCongGiangVien);
+        GiangVien truongBoMon = giangVienService.getTruongBoMon(phanCongGiangVien.getKeHoachChiTiet().getHocPhan().getBoMon().getId());
+        mailService.sendEmail(truongBoMon.getUser().getEmail(), "Phản hồi lịch phân công",
+                "Lịch dạy học phần "+phanCongGiangVien.getKeHoachChiTiet().getHocPhan().getTenHP()+" đã được phản hổi bời giảng viên "+
+                        phanCongGiangVien.getGiangVien().getTenGV()
+                ,false, true);
+    }
 }
