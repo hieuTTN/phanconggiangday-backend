@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import com.web.enums.LoaiNhom;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,9 @@ public class GiangVienHocPhan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private LoaiNhom loaiNhom;
 
     @ManyToOne
     private GiangVien giangVien;

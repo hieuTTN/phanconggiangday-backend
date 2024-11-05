@@ -1,9 +1,13 @@
 package com.web.service;
 
+import com.web.dto.response.GiangVienHocPhanDto;
 import com.web.entity.GiangVien;
+import com.web.entity.GiangVienHocPhan;
 import com.web.entity.User;
 import com.web.exception.MessageException;
+import com.web.repository.GiangVienHocPhanRepository;
 import com.web.repository.GiangVienRepository;
+import com.web.repository.PhanCongGiangVienRepository;
 import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +22,12 @@ public class GiangVienService {
 
     @Autowired
     private GiangVienRepository giangVienRepository;
+
+    @Autowired
+    private GiangVienHocPhanRepository giangVienHocPhanRepository;
+
+    @Autowired
+    private PhanCongGiangVienRepository phanCongGiangVienRepository;
 
     @Autowired
     private UserUtils userUtils;
@@ -110,5 +120,18 @@ public class GiangVienService {
         User user = userUtils.getUserWithAuthority();
         String gv = giangVienRepository.boMonCuaToi(user.getId());
         return gv;
+    }
+
+    public List<GiangVien> findByBoMon(Long boMonId) {
+        return giangVienRepository.findByBoMon(boMonId);
+    }
+
+    public GiangVienHocPhanDto thongTinGvHocPhan(Long namHocId,Long idGv) {
+        GiangVienHocPhanDto dto = new GiangVienHocPhanDto();
+        List<GiangVienHocPhan> giangVienHocPhans = giangVienHocPhanRepository.findByGiangVien(idGv);
+        dto.setGiangVienHocPhans(giangVienHocPhans);
+        Integer soNhomDay = phanCongGiangVienRepository.soNhomDay(idGv, namHocId);
+        dto.setSoNhomDay(soNhomDay);
+        return dto;
     }
 }

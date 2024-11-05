@@ -1,7 +1,10 @@
 package com.web.api;
 
+import com.web.dto.response.GiangVienHocPhanDto;
 import com.web.entity.GiangVien;
+import com.web.entity.User;
 import com.web.service.GiangVienService;
+import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +22,9 @@ public class GiangVienApi {
     @Autowired
     private GiangVienService giangVienService;
 
+    @Autowired
+    private UserUtils userUtils;
+
     @GetMapping("/all/find-all")
     public ResponseEntity<?> getAll(Pageable pageable, @RequestParam(required = false) String search){
         Page<GiangVien> result = giangVienService.findAll(pageable, search);
@@ -28,6 +34,13 @@ public class GiangVienApi {
     @GetMapping("/all/find-all-list")
     public ResponseEntity<?> getAllList(){
         List<GiangVien> result = giangVienService.findAll();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/head-department/find-all-list-bo-mon")
+    public ResponseEntity<?> getAllListBoMon(){
+        GiangVien giangVien = giangVienService.thongTinCuaToi();
+        List<GiangVien> result = giangVienService.findByBoMon(giangVien.getBoMon().getId());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -78,6 +91,12 @@ public class GiangVienApi {
     @GetMapping("/teacher/bo-mon-cua-toi")
     public ResponseEntity<?> boMonCuaToi() {
         String result = giangVienService.boMonCuaToi();
+        return new ResponseEntity(result, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/head-department/thon-tin-gv")
+    public ResponseEntity<?> thongTinGvHocPhan(@RequestParam Long namHocId, @RequestParam Long idGv) {
+        GiangVienHocPhanDto result = giangVienService.thongTinGvHocPhan(namHocId,idGv);
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
 

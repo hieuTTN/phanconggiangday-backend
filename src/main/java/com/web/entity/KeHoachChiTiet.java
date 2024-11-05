@@ -1,9 +1,11 @@
 package com.web.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "ke_hoach_chi_tiet")
@@ -27,4 +29,7 @@ public class KeHoachChiTiet {
     @ManyToOne
     private NamHoc namHoc;
 
+    @OneToMany(mappedBy = "keHoachChiTiet", cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties(value = {"keHoachChiTiet"})
+    private List<PhanCongGiangVien> phanCongGiangViens;
 }
