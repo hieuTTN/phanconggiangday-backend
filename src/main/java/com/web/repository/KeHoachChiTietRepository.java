@@ -11,12 +11,16 @@ import java.util.Optional;
 
 public interface KeHoachChiTietRepository extends JpaRepository<KeHoachChiTiet, Long> {
 
-    @Query("select k from KeHoachChiTiet k where k.namHoc.id = ?1")
-    Page<KeHoachChiTiet> findByKeHoach(Long keHoachId, Pageable pageable);
+    @Query("select k from KeHoachChiTiet k where k.namHoc.id = ?1 and (k.hocPhan.tenHP like ?2 or k.hocPhan.maHP like ?2 or k.hocPhan.boMon.tenBoMon like ?2)")
+    Page<KeHoachChiTiet> findByNamHoc(Long idNamHoc,String search, Pageable pageable);
 
     @Query("select k from KeHoachChiTiet k where k.namHoc.id = ?1")
     List<KeHoachChiTiet> findByNamHoc(Long namHocId);
 
     @Query("select k from KeHoachChiTiet k where k.hocPhan.id = ?1 and k.namHoc.id = ?2")
     Optional<KeHoachChiTiet> findByHocPhanAndNamHoc(Long hocPhanId, Long namHocId);
+
+    @Query("select k from KeHoachChiTiet k where k.namHoc.id = ?1 and (k.hocPhan.tenHP like ?2 or k.hocPhan.maHP like ?2 or " +
+            "k.hocPhan.boMon.tenBoMon like ?2) and k.hocPhan.boMon.id = ?3")
+    Page<KeHoachChiTiet> findByNamHocAndTbm(Long idNamHoc, String search, Long idBoMon, Pageable pageable);
 }

@@ -1,10 +1,7 @@
 package com.web.api;
 
-import com.web.dto.request.KeHoachMoMonRequest;
 import com.web.entity.KeHoachChiTiet;
-import com.web.entity.KeHoachMoMon;
 import com.web.service.KeHoachChiTietService;
-import com.web.service.KeHoachMoMonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,8 +18,16 @@ public class KeHoachChiTietApi {
     private KeHoachChiTietService keHoachChiTietService;
 
     @GetMapping("/all/find-by-kehoach")
-    public ResponseEntity<?> getAll(Pageable pageable, @RequestParam(required = false) Long idKeHoach){
-        Page<KeHoachChiTiet> result = keHoachChiTietService.findByKeHoach(idKeHoach,pageable);
+    public ResponseEntity<?> getAll(Pageable pageable, @RequestParam(required = false) Long idNamHoc,
+                                    @RequestParam(required = false) String search){
+        Page<KeHoachChiTiet> result = keHoachChiTietService.findByNamHoc(search,idNamHoc,pageable);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/head-department/find-by-namHoc")
+    public ResponseEntity<?> findByTruongBoMon(Pageable pageable, @RequestParam(required = false) Long idNamHoc,
+                                    @RequestParam(required = false) String search){
+        Page<KeHoachChiTiet> result = keHoachChiTietService.findByNamHocAndTbm(search,idNamHoc,pageable);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
