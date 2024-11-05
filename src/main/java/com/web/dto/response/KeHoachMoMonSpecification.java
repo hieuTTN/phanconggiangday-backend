@@ -11,30 +11,35 @@ import javax.persistence.criteria.Root;
 
 public class KeHoachMoMonSpecification implements Specification<KeHoachMoMon> {
 
-    private String maKhoaHoc;
+    Long hocKyId;
 
-    private Long idNamHoc;
+    Long idNamHoc;
 
-    private Long maHP;
+    Long nganhId;
 
-    public KeHoachMoMonSpecification(String maKhoaHoc, Long idNamHoc, Long maHP) {
-        this.maKhoaHoc = maKhoaHoc;
+    Long khoaHocId;
+
+    public KeHoachMoMonSpecification(Long hocKyId, Long idNamHoc, Long nganhId, Long khoaHocId) {
+        this.hocKyId = hocKyId;
         this.idNamHoc = idNamHoc;
-        this.maHP = maHP;
+        this.nganhId = nganhId;
+        this.khoaHocId = khoaHocId;
     }
-
 
     @Override
     public Predicate toPredicate(Root<KeHoachMoMon> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         Predicate predicate = cb.conjunction();
-        if (maKhoaHoc != null) {
-            predicate = cb.and(predicate, cb.equal(root.get("khoaHoc").get("maKhoaHoc"), maKhoaHoc));
+        if (hocKyId != null) {
+            predicate = cb.and(predicate, cb.equal(root.get("hocKy").get("id"), hocKyId));
         }
         if (idNamHoc != null) {
             predicate = cb.and(predicate, cb.equal(root.get("namHoc").get("id"), idNamHoc));
         }
-        if (maHP != null) {
-            predicate = cb.and(predicate, cb.equal(root.get("hocPhan").get("maHP"), maHP));
+        if (nganhId != null) {
+            predicate = cb.and(predicate, cb.equal(root.get("nganh").get("id"), nganhId));
+        }
+        if (khoaHocId != null) {
+            predicate = cb.and(predicate, cb.equal(root.get("khoaHoc").get("id"), khoaHocId));
         }
         return predicate;
     }

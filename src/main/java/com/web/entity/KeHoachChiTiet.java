@@ -25,5 +25,6 @@ public class KeHoachChiTiet {
     private HocPhan hocPhan;
 
     @ManyToOne
-    private KeHoachMoMon keHoachMoMon;
+    private NamHoc namHoc;
+
 }

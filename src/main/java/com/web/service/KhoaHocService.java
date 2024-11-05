@@ -1,6 +1,7 @@
 package com.web.service;
 
 import com.web.entity.KhoaHoc;
+import com.web.enums.TrangThaiKhoaHoc;
 import com.web.exception.MessageException;
 import com.web.repository.KhoaHocRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,10 @@ public class KhoaHocService {
         catch (Exception e){
             throw new MessageException("Khóa học này đã được dùng không thể xóa");
         }
+    }
+
+    public List<KhoaHoc> khoaHocChuaKetThuc() {
+        List<KhoaHoc> page = khoaHocRepository.khoaHocChuaKetThuc(TrangThaiKhoaHoc.DANG_HOC);
+        return page;
     }
 }

@@ -4,27 +4,20 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "ke_hoach_hoc")
+@Table(name = "khoa_hoc_nganh_hoc")
 @Getter
 @Setter
-public class KeHoachHoc {
+public class KhoaHocNganhHoc {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private Nganh nganh;
-
-    @ManyToOne
     private KhoaHoc khoaHoc;
 
-    @Transient
-    private Long soLuongChiTietHoc = 0L;
-
-    @Transient
-    private Long soLuongKyHoc = 0L;
+    @ManyToOne
+    private Nganh nganh;
 }

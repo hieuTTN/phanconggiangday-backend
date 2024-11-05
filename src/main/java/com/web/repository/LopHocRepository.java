@@ -19,4 +19,7 @@ public interface LopHocRepository extends JpaRepository<LopHoc, Long> {
 
     @Query("select sum(l.soSinhVienHienTai) from LopHoc l where l.nganh.id = ?1")
     Integer totalStudent(Long nganhId);
+
+    @Query("select sum(l.soSinhVienHienTai) from LopHoc l where l.khoaHoc.id = ?1 and l.nganh.id = ?2")
+    Integer tongSinhVien(Long khoaHocId, Long nganhId);
 }

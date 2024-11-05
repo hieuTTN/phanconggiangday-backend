@@ -31,6 +31,12 @@ public class KhoaHocApi {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/all/khoa-hoc-chua-ket-thuc")
+    public ResponseEntity<?> khoaHocChuaKetThuc(){
+        List<KhoaHoc> result = khoaHocService.khoaHocChuaKetThuc();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping("/admin/add")
     public ResponseEntity<?> create(@RequestBody KhoaHoc khoaHoc) {
         KhoaHoc result = khoaHocService.save(khoaHoc);

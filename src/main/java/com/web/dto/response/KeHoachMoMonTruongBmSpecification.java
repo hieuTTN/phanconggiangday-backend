@@ -10,35 +10,45 @@ import javax.persistence.criteria.Root;
 
 public class KeHoachMoMonTruongBmSpecification implements Specification<KeHoachMoMon> {
 
-    private String maKhoaHoc;
+    Long hocKyId;
 
-    private Long idNamHoc;
+    Long idNamHoc;
 
-    private Long maHP;
+    Long nganhId;
 
-    private String maChuyenNganh;
+    Long khoaHocId;
 
-    public KeHoachMoMonTruongBmSpecification(String maKhoaHoc, Long idNamHoc, Long maHP, String maChuyenNganh) {
-        this.maKhoaHoc = maKhoaHoc;
+    Long boMonId;
+
+
+    public KeHoachMoMonTruongBmSpecification(Long hocKyId, Long idNamHoc, Long nganhId, Long khoaHocId, Long boMonId) {
+        this.hocKyId = hocKyId;
         this.idNamHoc = idNamHoc;
-        this.maHP = maHP;
-        this.maChuyenNganh = maChuyenNganh;
+        this.nganhId = nganhId;
+        this.khoaHocId = khoaHocId;
+        this.boMonId = boMonId;
     }
 
     @Override
     public Predicate toPredicate(Root<KeHoachMoMon> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         Predicate predicate = cb.conjunction();
-        if (maKhoaHoc != null) {
-            predicate = cb.and(predicate, cb.equal(root.get("khoaHoc").get("maKhoaHoc"), maKhoaHoc));
+        if (hocKyId != null) {
+            predicate = cb.and(predicate, cb.equal(root.get("hocKy").get("id"), hocKyId));
         }
         if (idNamHoc != null) {
             predicate = cb.and(predicate, cb.equal(root.get("namHoc").get("id"), idNamHoc));
         }
-        if (maHP != null) {
-            predicate = cb.and(predicate, cb.equal(root.get("hocPhan").get("maHP"), maHP));
+        if (nganhId != null) {
+            predicate = cb.and(predicate, cb.equal(root.get("nganh").get("id"), nganhId));
         }
-        if (maChuyenNganh != null) {
-            predicate = cb.and(predicate, cb.equal(root.get("hocPhan").get("chuyenNganh").get("maChuyenNganh"), maChuyenNganh));
+        if (khoaHocId != null) {
+            predicate = cb.and(predicate, cb.equal(root.get("khoaHoc").get("id"), khoaHocId));
+        }
+        if (nganhId != null) {
+            predicate = cb.and(predicate, cb.equal(root.get("khoaHoc").get("id"), khoaHocId));
+        }
+        if (boMonId != null) {
+            predicate = cb.and(predicate, cb.equal(root.get("khoaHoc").get("id"), khoaHocId));
         }
         return predicate;
     }

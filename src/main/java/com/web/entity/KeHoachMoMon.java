@@ -32,4 +32,7 @@ public class KeHoachMoMon {
 
     @ManyToOne
     private Nganh nganh;
+
+    @Transient
+    private Integer tongSinhVien;
 }
