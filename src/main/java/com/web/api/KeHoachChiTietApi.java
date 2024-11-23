@@ -24,6 +24,19 @@ public class KeHoachChiTietApi {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping("/all/lock")
+    public ResponseEntity<?> lock(@RequestParam Long idNamHoc){
+        keHoachChiTietService.lock(idNamHoc);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/all/lock-single")
+    public ResponseEntity<?> lockSingle(@RequestParam Long id){
+        keHoachChiTietService.lockSingle(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
     @GetMapping("/head-department/find-by-namHoc")
     public ResponseEntity<?> findByTruongBoMon(Pageable pageable, @RequestParam(required = false) Long idNamHoc,
                                     @RequestParam(required = false) String search){

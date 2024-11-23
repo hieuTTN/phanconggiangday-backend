@@ -1,6 +1,7 @@
 package com.web.service;
 
 import com.web.dto.response.GiangVienHocPhanDto;
+import com.web.dto.response.GiangVienSoTiet;
 import com.web.entity.GiangVien;
 import com.web.entity.GiangVienHocPhan;
 import com.web.entity.User;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -140,4 +142,22 @@ public class GiangVienService {
         GiangVien giangVien = giangVienRepository.getTruongBoMon(boMonId, Contains.ROLE_HEAD_DEPARTMENT);
         return giangVien;
     }
+
+    public List<GiangVien> findByHocPhan(Long idhocphan) {
+        List<GiangVien> list = giangVienHocPhanRepository.findByHocPhan(idhocphan);
+        return list;
+    }
+
+    public Page<GiangVienSoTiet> giangVienSoTiets(Long idNamHoc, Page<GiangVien> giangViens,Pageable pageable){
+        Page<GiangVienSoTiet> result = giangViens.map(gv ->
+                new GiangVienSoTiet(gv)
+        );
+        for(GiangVienSoTiet g : result.getContent()){
+            Double sotiet = giangVienRepository.tinhTongSoTiet(g.getGiangVien().getId(), idNamHoc);
+            g.setSoTiet(sotiet);
+        }
+        return result;
+    }
+
+
 }

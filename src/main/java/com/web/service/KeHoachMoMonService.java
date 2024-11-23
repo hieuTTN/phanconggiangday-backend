@@ -82,7 +82,6 @@ public class KeHoachMoMonService {
             keHoachMoMon.setKhoaHoc(khoaHoc);
             keHoachMoMonRepository.save(keHoachMoMon);
         }
-
         updateSoLuongTong(request.getNamHocId());
     }
 

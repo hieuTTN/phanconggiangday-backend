@@ -53,4 +53,24 @@ public class KeHoachChiTietService {
         keHoachChiTiet.setTongSoNhom(soNhom);
         keHoachChiTietRepository.save(keHoachChiTiet);
     }
+
+    public void lock(Long idNamHoc) {
+        keHoachChiTietRepository.lock(idNamHoc);
+    }
+
+    public void lockSingle(Long id) {
+        KeHoachChiTiet keHoachChiTiet = keHoachChiTietRepository.findById(id).get();
+        if(keHoachChiTiet.getLocked() == null){
+            keHoachChiTiet.setLocked(true);
+        }
+        else{
+            if(keHoachChiTiet.getLocked() == false){
+                keHoachChiTiet.setLocked(true);
+            }
+            else{
+                keHoachChiTiet.setLocked(false);
+            }
+        }
+        keHoachChiTietRepository.save(keHoachChiTiet);
+    }
 }

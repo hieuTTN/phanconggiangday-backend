@@ -1,10 +1,12 @@
 package com.web.service;
 
+import com.web.dto.response.GiangVienSoTiet;
 import com.web.entity.GiangVien;
 import com.web.entity.KeHoachChiTiet;
 import com.web.entity.PhanCongGiangVien;
 import com.web.enums.LoaiNhom;
 import com.web.exception.MessageException;
+import com.web.repository.GiangVienRepository;
 import com.web.repository.KeHoachChiTietRepository;
 import com.web.repository.PhanCongGiangVienRepository;
 import com.web.utils.MailService;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,6 +27,9 @@ public class PhanCongGiangVienService {
 
     @Autowired
     private GiangVienService giangVienService;
+
+    @Autowired
+    private GiangVienRepository giangVienRepository;
 
     @Autowired
     private MailService mailService;
@@ -41,8 +47,12 @@ public class PhanCongGiangVienService {
                 phanCongGiangVien.getGiangVien().getId()).isPresent()){
             throw new MessageException("Giảng viên đã được thêm, không thể thêm lại");
         }
-        KeHoachChiTiet keHoachChiTiet = keHoachChiTietRepository.findById(phanCongGiangVien.getKeHoachChiTiet().getId()).get();
-
+       KeHoachChiTiet keHoachChiTiet = keHoachChiTietRepository.findById(phanCongGiangVien.getKeHoachChiTiet().getId()).get();
+        if (keHoachChiTiet.getLocked() != null){
+            if(keHoachChiTiet.getLocked() == true){
+                throw new MessageException("Kế hoạch đã bị khóa");
+            }
+        }
         Integer numNhomAll = phanCongGiangVienRepository.tongNhomByLoaiNhom(LoaiNhom.ALL, keHoachChiTiet.getId());
         Integer numNhomTH = phanCongGiangVienRepository.tongNhomByLoaiNhom(LoaiNhom.TH, keHoachChiTiet.getId());
         Integer numNhomLT = phanCongGiangVienRepository.tongNhomByLoaiNhom(LoaiNhom.LT, keHoachChiTiet.getId());
@@ -77,6 +87,13 @@ public class PhanCongGiangVienService {
     }
 
     public void delete(Long id){
+        PhanCongGiangVien phanCongGiangVien = phanCongGiangVienRepository.findById(id).get();
+        KeHoachChiTiet keHoachChiTiet = phanCongGiangVien.getKeHoachChiTiet();
+        if (keHoachChiTiet.getLocked() != null){
+            if(keHoachChiTiet.getLocked() == true){
+                throw new MessageException("Kế hoạch đã bị khóa");
+            }
+        }
         try {
             phanCongGiangVienRepository.deleteById(id);
         }
@@ -108,4 +125,7 @@ public class PhanCongGiangVienService {
                         phanCongGiangVien.getGiangVien().getTenGV()
                 ,false, true);
     }
+
+
+
 }

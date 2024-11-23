@@ -1,5 +1,6 @@
 package com.web.repository;
 
+import com.web.entity.GiangVien;
 import com.web.entity.GiangVienHocPhan;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,4 +20,7 @@ public interface GiangVienHocPhanRepository extends JpaRepository<GiangVienHocPh
 
     @Query("select g from GiangVienHocPhan g where g.giangVien.id = ?1")
     List<GiangVienHocPhan> findByGiangVien(Long idgv);
+
+    @Query("select g.giangVien from GiangVienHocPhan g where g.hocPhan.id = ?1")
+    List<GiangVien> findByHocPhan(Long hpId);
 }

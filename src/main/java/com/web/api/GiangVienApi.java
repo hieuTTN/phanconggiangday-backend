@@ -1,8 +1,10 @@
 package com.web.api;
 
 import com.web.dto.response.GiangVienHocPhanDto;
+import com.web.dto.response.GiangVienSoTiet;
 import com.web.entity.GiangVien;
 import com.web.entity.User;
+import com.web.repository.GiangVienRepository;
 import com.web.service.GiangVienService;
 import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class GiangVienApi {
 
     @Autowired
     private GiangVienService giangVienService;
+
+    @Autowired
+    private GiangVienRepository giangVienRepository;
 
     @Autowired
     private UserUtils userUtils;
@@ -47,6 +52,12 @@ public class GiangVienApi {
     @GetMapping("/head-department/find-all-by-chuyen-nganh")
     public ResponseEntity<?> getAllByChuyenNganh(){
         List<GiangVien> result = giangVienService.findAllByChuyenNganh();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/head-department/find-all-by-hoc-phan")
+    public ResponseEntity<?> getAllByChuyenNganh(@RequestParam Long idhocphan){
+        List<GiangVien> result = giangVienService.findByHocPhan(idhocphan);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -112,6 +123,11 @@ public class GiangVienApi {
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
 
-
+    @GetMapping("/admin/giang-vien-so-tiet")
+    public ResponseEntity<?> giangVienSoTiet(@RequestParam Long idnamhoc, Pageable pageable){
+        Page<GiangVien> list = giangVienRepository.findAll(pageable);
+        Page<GiangVienSoTiet> result = giangVienService.giangVienSoTiets(idnamhoc,list, pageable);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
 }

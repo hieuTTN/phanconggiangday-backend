@@ -37,4 +37,28 @@ public interface GiangVienRepository extends JpaRepository<GiangVien, Long> {
 
     @Query("select g from GiangVien g where g.boMon.id = ?1 and g.user.authorities.name = ?2")
     GiangVien getTruongBoMon(Long boMonId, String authorName);
+
+    @Query(value = "select sum(\n" +
+            "    COALESCE(\n" +
+            "        (select sum(hp.so_tiet_ly_thuyet + hp.so_tiet_thuc_hanh)\n" +
+            "         from phan_cong_giang_vien pc\n" +
+            "         inner join ke_hoach_chi_tiet kc on kc.id = pc.ke_hoach_chi_tiet_id\n" +
+            "         inner join hoc_phan hp on hp.id = kc.hoc_phan_id\n" +
+            "         where pc.giang_vien_id = ?1 and pc.loai_nhom = 'ALL' and kc.nam_hoc_id = ?2), 0)\n" +
+            "    +\n" +
+            "    COALESCE(\n" +
+            "        (select sum(hp.so_tiet_ly_thuyet)\n" +
+            "         from phan_cong_giang_vien pc\n" +
+            "         inner join ke_hoach_chi_tiet kc on kc.id = pc.ke_hoach_chi_tiet_id\n" +
+            "         inner join hoc_phan hp on hp.id = kc.hoc_phan_id\n" +
+            "         where pc.giang_vien_id = ?1 and pc.loai_nhom = 'LT' and kc.nam_hoc_id = ?2), 0)\n" +
+            "    +\n" +
+            "    COALESCE(\n" +
+            "        (select sum(hp.so_tiet_thuc_hanh)\n" +
+            "         from phan_cong_giang_vien pc\n" +
+            "         inner join ke_hoach_chi_tiet kc on kc.id = pc.ke_hoach_chi_tiet_id\n" +
+            "         inner join hoc_phan hp on hp.id = kc.hoc_phan_id\n" +
+            "         where pc.giang_vien_id = ?1 and pc.loai_nhom = 'TH' and kc.nam_hoc_id = ?2), 0)\n" +
+            ") as tong;\n", nativeQuery = true)
+    Double tinhTongSoTiet(Long idGiangVien, Long idHocKy);
 }
