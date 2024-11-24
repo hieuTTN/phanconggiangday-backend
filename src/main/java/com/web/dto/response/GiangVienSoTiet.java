@@ -12,6 +12,8 @@ public class GiangVienSoTiet {
 
     private Double soTiet;
 
+    private Double soTietThucTe;
+
     public GiangVienSoTiet(GiangVien giangVien) {
         this.giangVien = giangVien;
     }
