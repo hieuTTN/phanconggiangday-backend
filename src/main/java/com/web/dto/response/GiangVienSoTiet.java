@@ -10,9 +10,9 @@ public class GiangVienSoTiet {
 
     private GiangVien giangVien;
 
-    private Double soTiet;
+    private Integer soTiet;
 
-    private Double soTietThucTe;
+    private Integer soTietThucTe;
 
     public GiangVienSoTiet(GiangVien giangVien) {
         this.giangVien = giangVien;

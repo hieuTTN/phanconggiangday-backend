@@ -154,9 +154,9 @@ public class GiangVienService {
         );
         for(GiangVienSoTiet g : result.getContent()){
             Double sotiet = giangVienRepository.tinhTongSoTiet(g.getGiangVien().getId(), idNamHoc);
-            g.setSoTiet(sotiet);
+            g.setSoTiet(sotiet.intValue());
             Double sotietThucTe = giangVienRepository.tinhTongSoTietThucTe(g.getGiangVien().getId(), idNamHoc);
-            g.setSoTietThucTe(sotietThucTe);
+            g.setSoTietThucTe(sotietThucTe.intValue());
 
         }
         return result;
