@@ -54,6 +54,26 @@ public class KeHoachChiTietService {
         keHoachChiTietRepository.save(keHoachChiTiet);
     }
 
+    public void updateTongSinhVien(Long id, Integer soLuong) {
+        KeHoachChiTiet keHoachChiTiet = keHoachChiTietRepository.findById(id).get();
+        if(keHoachChiTiet.getLocked() != null && keHoachChiTiet.getLocked() == true){
+            throw new MessageException("Kế hoạch này đã khóa, không thể cập nhật");
+        }
+        if(keHoachChiTiet.getSoLuongSinhVienNhom() != null){
+            System.out.println("so luong sv nhom: "+keHoachChiTiet.getSoLuongSinhVienNhom());
+            Integer soNhom = soLuong / keHoachChiTiet.getSoLuongSinhVienNhom();
+            if(soLuong % keHoachChiTiet.getSoLuongSinhVienNhom() != 0){
+                ++soNhom;
+            }
+            keHoachChiTiet.setTongSoNhom(soNhom);
+            System.out.println("tong nhom: "+soNhom);
+        }
+        keHoachChiTiet.setTongSinhVien(soLuong);
+        System.out.println("soluong tong: "+soLuong);
+        System.out.println("soluong tong: "+keHoachChiTiet.getTongSinhVien());
+        keHoachChiTietRepository.save(keHoachChiTiet);
+    }
+
     public void lock(Long idNamHoc) {
         keHoachChiTietRepository.lock(idNamHoc);
     }

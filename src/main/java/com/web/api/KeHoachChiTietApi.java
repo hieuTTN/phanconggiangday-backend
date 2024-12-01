@@ -49,4 +49,10 @@ public class KeHoachChiTietApi {
         keHoachChiTietService.updateSlSinhVienNhom(id, soLuongSinhVienNhom);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @PostMapping("/admin/update-tong-soluong-sinh-vien")
+    public ResponseEntity<?> updateTongSlSinhVienNhom(@RequestParam Long id, @RequestParam Integer tongSL){
+        keHoachChiTietService.updateTongSinhVien(id, tongSL);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }
