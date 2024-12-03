@@ -1,6 +1,7 @@
 package com.web.api;
 
 import com.web.entity.PhanCongGiangVien;
+import com.web.enums.LoaiNhom;
 import com.web.service.PhanCongGiangVienService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,12 @@ public class PhanCongGiangVienApi {
     @PostMapping("/head-department/add")
     public ResponseEntity<?> createByTBM(@RequestBody PhanCongGiangVien phanCongGiangVien) {
         PhanCongGiangVien result = phanCongGiangVienService.save(phanCongGiangVien);
+        return new ResponseEntity(result, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/head-department/update")
+    public ResponseEntity<?> updateByTBM(@RequestParam Long id, @RequestParam Integer soNhom, @RequestParam LoaiNhom loaiNhom) {
+        PhanCongGiangVien result = phanCongGiangVienService.update(id, soNhom, loaiNhom);
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
 

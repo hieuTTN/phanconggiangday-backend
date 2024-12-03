@@ -86,6 +86,58 @@ public class PhanCongGiangVienService {
         return phanCongGiangVien;
     }
 
+    public PhanCongGiangVien update(Long id, Integer soNhom, LoaiNhom loaiNhom) {
+        PhanCongGiangVien pc = phanCongGiangVienRepository.findById(id).get();
+        KeHoachChiTiet keHoachChiTiet = pc.getKeHoachChiTiet();
+        if (pc.getKeHoachChiTiet().getLocked() != null){
+            if(keHoachChiTiet.getLocked() == true){
+                throw new MessageException("Kế hoạch đã bị khóa");
+            }
+        }
+        Integer numNhomAll = phanCongGiangVienRepository.tongNhomByLoaiNhom(LoaiNhom.ALL, keHoachChiTiet.getId());
+        Integer numNhomTH = phanCongGiangVienRepository.tongNhomByLoaiNhom(LoaiNhom.TH, keHoachChiTiet.getId());
+        Integer numNhomLT = phanCongGiangVienRepository.tongNhomByLoaiNhom(LoaiNhom.LT, keHoachChiTiet.getId());
+        if(pc.getLoaiNhom().equals(LoaiNhom.TH)){
+            numNhomTH -= pc.getSoNhom();
+        }
+        if(pc.getLoaiNhom().equals(LoaiNhom.LT)){
+            numNhomLT -= pc.getSoNhom();
+        }
+        if(pc.getLoaiNhom().equals(LoaiNhom.ALL)){
+            numNhomAll -= pc.getSoNhom();
+        }
+        if(numNhomAll == null) numNhomAll = 0;
+        if(numNhomTH == null) numNhomTH = 0;
+        if(numNhomLT == null) numNhomLT = 0;
+
+        if(loaiNhom.equals(LoaiNhom.ALL)){
+            numNhomAll += soNhom;
+        }
+        if(loaiNhom.equals(LoaiNhom.TH)){
+            numNhomTH += soNhom;
+        }
+        if(loaiNhom.equals(LoaiNhom.LT)){
+            numNhomLT += soNhom;
+        }
+        if(numNhomLT == numNhomTH){
+            numNhomAll += numNhomLT;
+        }
+        if(numNhomLT < numNhomTH){
+            numNhomAll += numNhomTH;
+        }
+        if(numNhomLT > numNhomTH){
+            numNhomAll += numNhomLT;
+        }
+        if(numNhomAll > keHoachChiTiet.getTongSoNhom()){
+            throw new MessageException("Tổng số nhóm không được vượt quá "+keHoachChiTiet.getTongSoNhom());
+        }
+        pc.setSoNhom(soNhom);
+        pc.setLoaiNhom(loaiNhom);
+        pc.setNgayCapNhat(LocalDateTime.now());
+        phanCongGiangVienRepository.save(pc);
+        return pc;
+    }
+
     public void delete(Long id){
         PhanCongGiangVien phanCongGiangVien = phanCongGiangVienRepository.findById(id).get();
         KeHoachChiTiet keHoachChiTiet = phanCongGiangVien.getKeHoachChiTiet();
@@ -125,7 +177,6 @@ public class PhanCongGiangVienService {
                         phanCongGiangVien.getGiangVien().getTenGV()
                 ,false, true);
     }
-
 
 
 }
