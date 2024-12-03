@@ -88,4 +88,9 @@ public class HocPhanService {
         }
         return hocPhanRepository.findByBoMon(gv.get().getBoMon().getId());
     }
+
+    public List<HocPhan> findByNamHoc(Long idNamHoc) {
+        List<HocPhan> list = hocPhanRepository.findByNamHoc(idNamHoc);
+        return list;
+    }
 }

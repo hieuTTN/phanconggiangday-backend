@@ -28,4 +28,9 @@ public interface HocPhanRepository extends JpaRepository<HocPhan, Long> {
 
     @Query("select h from HocPhan h where h.boMon.id = ?1")
     List<HocPhan> findByBoMon(Long id);
+
+    @Query(value = "SELECT hp.* FROM hoc_phan hp\n" +
+            "WHERE hp.id NOT IN \n" +
+            "(SELECT khct.hoc_phan_id FROM ke_hoach_chi_tiet khct WHERE khct.nam_hoc_id = ?1)", nativeQuery = true)
+    List<HocPhan> findByNamHoc(Long idNamHoc);
 }

@@ -130,4 +130,12 @@ public class GiangVienApi {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/head-department/giang-vien-so-tiet")
+    public ResponseEntity<?> giangVienSoTietTbm(@RequestParam Long idnamhoc, Pageable pageable){
+        GiangVien giangVien = giangVienService.thongTinCuaToi();
+        Page<GiangVien> list = giangVienRepository.findByBoMon(giangVien.getBoMon().getId(),pageable);
+        Page<GiangVienSoTiet> result = giangVienService.giangVienSoTiets(idnamhoc,list, pageable);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }

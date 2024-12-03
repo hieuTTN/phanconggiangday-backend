@@ -33,6 +33,12 @@ public class HocPhanApi {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/all/find-all-list-by-nam-hoc")
+    public ResponseEntity<?> getAllListByNamHoc(@RequestParam Long idNamHoc){
+        List<HocPhan> result = hocPhanService.findByNamHoc(idNamHoc);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping("/admin/add")
     public ResponseEntity<?> create(@RequestBody HocPhan hocPhan) {
         HocPhan result = hocPhanService.save(hocPhan);

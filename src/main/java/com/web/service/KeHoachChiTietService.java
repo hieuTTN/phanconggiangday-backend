@@ -1,15 +1,21 @@
 package com.web.service;
 
 import com.web.entity.GiangVien;
+import com.web.entity.HocPhan;
 import com.web.entity.KeHoachChiTiet;
+import com.web.entity.NamHoc;
 import com.web.exception.MessageException;
 import com.web.repository.GiangVienRepository;
+import com.web.repository.HocPhanRepository;
 import com.web.repository.KeHoachChiTietRepository;
+import com.web.repository.NamHocRepository;
 import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class KeHoachChiTietService {
@@ -22,6 +28,12 @@ public class KeHoachChiTietService {
 
     @Autowired
     private GiangVienRepository giangVienRepository;
+
+    @Autowired
+    private NamHocRepository namHocRepository;
+
+    @Autowired
+    private HocPhanRepository hocPhanRepository;
 
     public Page<KeHoachChiTiet> findByNamHoc(String search,Long idNamHoc, Pageable pageable){
         if(search == null){
@@ -92,5 +104,32 @@ public class KeHoachChiTietService {
             }
         }
         keHoachChiTietRepository.save(keHoachChiTiet);
+    }
+
+    public void create(Long idMonHoc, Long idNamHoc, Integer tongSv, Integer soLuongSvNhom) {
+        Optional<KeHoachChiTiet> keHoachChiTiet = keHoachChiTietRepository.findByHocPhanAndNamHoc(idMonHoc, idNamHoc);
+        if(keHoachChiTiet.isPresent()){
+            throw new MessageException("Học phần này đã được mở cho học kỳ và năm học này");
+        }
+        NamHoc namHoc = namHocRepository.findById(idNamHoc).get();
+        HocPhan hocPhan = hocPhanRepository.findById(idMonHoc).get();
+        KeHoachChiTiet k = new KeHoachChiTiet();
+        k.setNamHoc(namHoc);
+        k.setLocked(false);
+        k.setHocPhan(hocPhan);
+        k.setTongSinhVien(tongSv);
+        k.setSoLuongSinhVienNhom(soLuongSvNhom);
+        if(tongSv != null && soLuongSvNhom != null){
+            Integer soNhom = tongSv / soLuongSvNhom;
+            if(tongSv % soLuongSvNhom != 0){
+                ++soNhom;
+            }
+            k.setTongSoNhom(soNhom);
+        }
+        keHoachChiTietRepository.save(k);
+    }
+
+    public void delete(Long id) {
+        keHoachChiTietRepository.deleteById(id);
     }
 }

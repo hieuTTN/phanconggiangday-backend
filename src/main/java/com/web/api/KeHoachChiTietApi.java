@@ -55,4 +55,17 @@ public class KeHoachChiTietApi {
         keHoachChiTietService.updateTongSinhVien(id, tongSL);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @PostMapping("/admin/add")
+    public ResponseEntity<?> addChiTiet(@RequestParam Long idMonHoc, @RequestParam Long idNamHoc,
+                                        @RequestParam(required = false) Integer tongSv, @RequestParam(required = false) Integer soLuongSvNhom){
+        keHoachChiTietService.create(idMonHoc, idNamHoc, tongSv, soLuongSvNhom);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/admin/delete")
+    public ResponseEntity<?> delete(@RequestParam("id") Long id){
+        keHoachChiTietService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
