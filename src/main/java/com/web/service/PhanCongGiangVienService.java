@@ -178,5 +178,16 @@ public class PhanCongGiangVienService {
                 ,false, true);
     }
 
+    public void traLoiphanHoi(String noiDung, Long id){
+        PhanCongGiangVien phanCongGiangVien = phanCongGiangVienRepository.findById(id).get();
+        phanCongGiangVien.setTraLoiPhanHoi(noiDung);
+        phanCongGiangVien.setNgayTraLoiPhanHoi(LocalDateTime.now());
+        phanCongGiangVienRepository.save(phanCongGiangVien);
+        mailService.sendEmail(phanCongGiangVien.getGiangVien().getUser().getEmail(), "Phản hồi lịch phân công",
+                "Lịch dạy học phần "+phanCongGiangVien.getKeHoachChiTiet().getHocPhan().getTenHP()+" đã được trả lời phản hồi, hãy truy cập vào website để xem "
+                ,false, true);
+    }
+
+
 
 }

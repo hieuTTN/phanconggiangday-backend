@@ -24,9 +24,13 @@ public class PhanCongGiangVien {
 
     private String phanHoi;
 
+    private String traLoiPhanHoi;
+
     private LocalDateTime ngayPhanHoi;
 
     private LocalDateTime ngayCapNhat;
+
+    private LocalDateTime ngayTraLoiPhanHoi;
 
     @ManyToOne
     private KeHoachChiTiet keHoachChiTiet;

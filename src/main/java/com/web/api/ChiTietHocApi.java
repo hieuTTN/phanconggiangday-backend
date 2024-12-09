@@ -28,6 +28,12 @@ public class ChiTietHocApi {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
+    @PostMapping("/admin/update")
+    public ResponseEntity<?> updateHocKy(@RequestParam Long id, @RequestParam Long hocKyId){
+        ChiTietHoc result = chiTietHocService.updateHocKy(id, hocKyId);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
     @DeleteMapping("/admin/delete")
     public ResponseEntity<?> delete(@RequestParam("id") Long id){
         chiTietHocService.delete(id);

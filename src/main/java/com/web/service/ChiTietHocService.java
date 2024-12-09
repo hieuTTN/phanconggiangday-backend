@@ -2,9 +2,11 @@ package com.web.service;
 
 import com.web.dto.request.ChiTietHocRequest;
 import com.web.entity.ChiTietHoc;
+import com.web.entity.HocKy;
 import com.web.entity.HocPhan;
 import com.web.entity.KeHoachHoc;
 import com.web.repository.ChiTietHocRepository;
+import com.web.repository.HocKyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,13 +22,16 @@ public class ChiTietHocService {
     @Autowired
     private ChiTietHocRepository chiTietHocRepository;
 
+    @Autowired
+    private HocKyRepository hocKyRepository;
+
     public List<ChiTietHoc> saveList(ChiTietHocRequest request){
         List<ChiTietHoc> list = new ArrayList<>();
         for(Long id : request.getListIdHocPhan()){
-//            Optional<ChiTietHoc> ex = chiTietHocRepository.findByHocPhanHocKyKhh(id, request.getHocKy().getId(), request.getKeHoachHoc().getId());
-//            if(ex.isPresent()){
-//                continue;
-//            }
+            Optional<ChiTietHoc> ex = chiTietHocRepository.findByHocPhanHocKyKhh(id, request.getHocKy().getId(), request.getKeHoachHoc().getId());
+            if(ex.isPresent()){
+                continue;
+            }
             ChiTietHoc chiTietHoc = new ChiTietHoc();
             chiTietHoc.setHocKy(request.getHocKy());
             chiTietHoc.setKeHoachHoc(request.getKeHoachHoc());
@@ -56,5 +61,12 @@ public class ChiTietHocService {
             page = chiTietHocRepository.findByKeHoachHocAndHocKy(keHoachHocId, hocKyId,pageable);
         }
         return page;
+    }
+
+    public ChiTietHoc updateHocKy(Long id, Long hocKyId) {
+        HocKy hocKy = hocKyRepository.findById(hocKyId).get();
+        ChiTietHoc chiTietHoc = chiTietHocRepository.findById(id).get();
+        chiTietHoc.setHocKy(hocKy);
+        return chiTietHocRepository.save(chiTietHoc);
     }
 }

@@ -138,6 +138,12 @@ public class UserApi {
                 .body(result);
     }
 
+    @PostMapping("/admin/update-account")
+    public ResponseEntity<?> updateAccount(@RequestBody UserRequest userRequest, @RequestParam Long id) throws URISyntaxException {
+        UserDto userDto = userService.updateAccount(userRequest, id);
+        return new ResponseEntity<>(userDto,HttpStatus.CREATED);
+    }
+
     @PostMapping("/public/quen-mat-khau")
     public ResponseEntity<?> quenMatKhau(@RequestParam String email) throws URISyntaxException {
         userService.guiYeuCauQuenMatKhau(email);
@@ -160,5 +166,10 @@ public class UserApi {
     @GetMapping("/admin/user-teacher")
     public List<User> getUserTeacher(){
         return userRepository.getTeacher(Contains.ROLE_TEACHER, Contains.ROLE_HEAD_DEPARTMENT);
+    }
+
+    @GetMapping("/admin/find-by-id")
+    public User findById(@RequestParam Long id){
+        return userRepository.findById(id).get();
     }
 }

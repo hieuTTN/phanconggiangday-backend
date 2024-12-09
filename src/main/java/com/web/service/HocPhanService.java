@@ -35,6 +35,9 @@ public class HocPhanService {
         if(ex.isPresent()){
             throw new MessageException("Mã học phần đã tồn tại");
         }
+        if(hocPhan.getTongSoTiet() == null){
+            hocPhan.setTongSoTiet(hocPhan.getSoTietLyThuyet() + hocPhan.getSoTietThucHanh());
+        }
         hocPhanRepository.save(hocPhan);
         return hocPhan;
     }
@@ -43,6 +46,9 @@ public class HocPhanService {
         Optional<HocPhan> ex = hocPhanRepository.findByMaHpAndId(hocPhan.getMaHP(), hocPhan.getId());
         if(ex.isPresent()){
             throw new MessageException("Mã học phần đã tồn tại");
+        }
+        if(hocPhan.getTongSoTiet() == null){
+            hocPhan.setTongSoTiet(hocPhan.getSoTietLyThuyet() + hocPhan.getSoTietThucHanh());
         }
         hocPhanRepository.save(hocPhan);
         return hocPhan;

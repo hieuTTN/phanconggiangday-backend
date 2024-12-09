@@ -11,4 +11,7 @@ public interface KhoaHocNganhHocRepository extends JpaRepository<KhoaHocNganhHoc
 
     @Query("select kn.nganh from KhoaHocNganhHoc kn where kn.khoaHoc.id = ?1")
     List<Nganh> findByKhoaHoc(Long khoaHocId);
+
+    @Query("select kn.nganh from KhoaHocNganhHoc kn where kn.khoaHoc.id = ?1 and kn.nganh.id = ?2")
+    KhoaHocNganhHoc findByKhoaHocAndNganhHoc(Long khoaHocId, Long nganhId);
 }

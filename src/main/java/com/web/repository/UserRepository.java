@@ -20,6 +20,9 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query(value = "select u from User u where u.email = ?1")
     Optional<User> findByEmail(String email);
 
+    @Query(value = "select u from User u where u.email = ?1 and u.id <> ?2")
+    Optional<User> findByEmailAndId(String email, Long id);
+
     @Query(value = "select u.* from users u where u.id = ?1", nativeQuery = true)
     Optional<User> findById(Long id);
 

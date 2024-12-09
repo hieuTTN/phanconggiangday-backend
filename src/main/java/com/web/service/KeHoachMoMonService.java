@@ -61,7 +61,6 @@ public class KeHoachMoMonService {
         HocKy hocKy = hocKyRepository.findById(request.getHocKyId()).get();
         NamHoc namHoc = namHocRepository.findById(request.getNamHocId()).get();
         KhoaHoc khoaHoc = khoaHocRepository.findById(request.getKhoaHocId()).get();
-
         List<Nganh> nganhs = khoaHocNganhHocRepository.findByKhoaHoc(request.getKhoaHocId());
         for(Nganh n : nganhs){
             Optional<KeHoachMoMon> ex = keHoachMoMonRepository.kiemTraTonTai(request.getKhoaHocId(), request.getHocKyId(), n.getId());
@@ -113,6 +112,9 @@ public class KeHoachMoMonService {
             for(ChiTietHoc c : allChiTietHoc){
                 if(c.getHocPhan().getId() == k.getHocPhan().getId()){
                     Integer totalSv = lopHocRepository.tongSinhVien(c.getKeHoachHoc().getKhoaHoc().getId(), c.getKeHoachHoc().getNganh().getId());
+                    if(totalSv == null){
+                        totalSv = 0;
+                    }
                     tongSv += totalSv;
                 }
             }

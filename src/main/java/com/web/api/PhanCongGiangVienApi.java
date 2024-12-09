@@ -54,4 +54,10 @@ public class PhanCongGiangVienApi {
         phanCongGiangVienService.phanHoi(phanHoi,id);
         return new ResponseEntity(HttpStatus.CREATED);
     }
+
+    @PostMapping("/head-department/tra-loi-phan-hoi")
+    public ResponseEntity<?> traLoiphanHoi(@RequestBody String phanHoi, @RequestParam Long id) {
+        phanCongGiangVienService.traLoiphanHoi(phanHoi,id);
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
 }

@@ -1,6 +1,7 @@
 package com.web.service;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.web.dto.request.UserRequest;
 import com.web.dto.response.CustomUserDetails;
 import com.web.dto.request.TokenDto;
 import com.web.dto.response.UserDto;
@@ -141,10 +142,10 @@ public class UserService  {
         user.get().setRememberKey(random);
         userRepository.save(user.get());
 
-        mailService.sendEmail(email, "Đặt lại mật khẩu","Cảm ơn bạn đã tin tưởng và xử dụng dịch vụ của chúng tôi:<br>" +
-                "Chúng tôi đã tạo một mật khẩu mới từ yêu cầu của bạn<br>" +
-                "Hãy lick vào bên dưới để đặt lại mật khẩu mới của bạn<br><br>" +
-                "<a href='http://localhost:8080/datlaimatkhau?email="+email+"&key="+random+"' style=\"background-color: #2f5fad; padding: 10px; color: #fff; font-size: 18px; font-weight: bold;\">Đặt lại mật khẩu</a>",false, true);
+        mailService.sendEmail(email, "Đặt lại mật khẩu",":<br>" +
+                "Nhấp vào liên kết bên dưới để đặt lại mật khẩu<br>" +
+                "Tuyệt đối không được chia sẻ mật khẩu cho bất kỳ ai<br><br>" +
+                "<a href='http://localhost:3000/datlaimatkhau?email="+email+"&key="+random+"' style=\"background-color: #2f5fad; padding: 10px; color: #fff; font-size: 18px; font-weight: bold;\">Đặt lại mật khẩu</a>",false, true);
 
     }
 
@@ -169,5 +170,18 @@ public class UserService  {
             page = userRepository.findAll(search,pageable);
         }
         return page;
+    }
+
+    public UserDto updateAccount(UserRequest userRequest, Long id) {
+        User user = userRepository.findById(id).get();
+        if(userRepository.findByEmailAndId(userRequest.getEmail(), id).isPresent()){
+            throw new MessageException("Email đã tồn tại");
+        }
+        user.setEmail(userRequest.getEmail());
+        user.setAuthorities(userRequest.getAuthorities());
+        user.setFullName(userRequest.getFullName());
+        user.setAvatar(userRequest.getAvatar());
+        User u = userRepository.save(user);
+        return userMapper.userToUserDto(u);
     }
 }

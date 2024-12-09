@@ -3,9 +3,11 @@ package com.web.service;
 import com.web.entity.BaiViet;
 import com.web.entity.ChiTietHoc;
 import com.web.entity.KeHoachHoc;
+import com.web.entity.KhoaHocNganhHoc;
 import com.web.exception.MessageException;
 import com.web.repository.ChiTietHocRepository;
 import com.web.repository.KeHoachHocRepository;
+import com.web.repository.KhoaHocNganhHocRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,18 +27,31 @@ public class KeHoachHocService {
     @Autowired
     private ChiTietHocRepository chiTietHocRepository;
 
+    @Autowired
+    private KhoaHocNganhHocRepository khoaHocNganhHocRepository;
+
     public KeHoachHoc save(KeHoachHoc keHoachHoc) {
         if(keHoachHoc.getId() == null){
             Optional<KeHoachHoc> ex = keHoachHocRepository.findByKhoaHocAndNganh(keHoachHoc.getKhoaHoc().getId(), keHoachHoc.getNganh().getId());
             if(ex.isPresent()){
                 throw new MessageException("Khóa học và ngành đã tồn tại");
             }
+            KhoaHocNganhHoc khoaHocNganhHoc = new KhoaHocNganhHoc();
+            khoaHocNganhHoc.setKhoaHoc(keHoachHoc.getKhoaHoc());
+            khoaHocNganhHoc.setNganh(keHoachHoc.getNganh());
+            khoaHocNganhHocRepository.save(khoaHocNganhHoc);
         }
         else{
             Optional<KeHoachHoc> ex = keHoachHocRepository.findByKhoaHocAndNganhAndId(keHoachHoc.getKhoaHoc().getId(), keHoachHoc.getNganh().getId(), keHoachHoc.getId());
             if(ex.isPresent()){
                 throw new MessageException("Khóa học và ngành đã tồn tại");
             }
+            KhoaHocNganhHoc khoaHocNganhHocex = khoaHocNganhHocRepository.findByKhoaHocAndNganhHoc(ex.get().getKhoaHoc().getId(), ex.get().getNganh().getId());
+            khoaHocNganhHocRepository.delete(khoaHocNganhHocex);
+            KhoaHocNganhHoc khoaHocNganhHoc = new KhoaHocNganhHoc();
+            khoaHocNganhHoc.setKhoaHoc(keHoachHoc.getKhoaHoc());
+            khoaHocNganhHoc.setNganh(keHoachHoc.getNganh());
+            khoaHocNganhHocRepository.save(khoaHocNganhHoc);
         }
         keHoachHocRepository.save(keHoachHoc);
         return keHoachHoc;
