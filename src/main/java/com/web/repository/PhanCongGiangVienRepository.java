@@ -17,6 +17,12 @@ public interface PhanCongGiangVienRepository extends JpaRepository<PhanCongGiang
     @Query("select p from PhanCongGiangVien p where p.keHoachChiTiet.id = ?1 and p.giangVien.id = ?2")
     Optional<PhanCongGiangVien> findByGiangVienAndKeHoach(Long idKeHoach, Long idgv);
 
+    @Query("select p from PhanCongGiangVien p where p.keHoachChiTiet.id = ?1 and p.giangVien.id = ?2 and p.loaiNhom = ?3")
+    Optional<PhanCongGiangVien> findByGiangVienAndKeHoachAndLoaiNhom(Long idKeHoach, Long idgv, LoaiNhom loaiNhom);
+
+    @Query("select p from PhanCongGiangVien p where p.keHoachChiTiet.id = ?1 and p.giangVien.id = ?2 and p.loaiNhom = ?3 and p.id <> ?4")
+    Optional<PhanCongGiangVien> findByGiangVienAndKeHoachAndLoaiNhomAndId(Long idKeHoach, Long idgv, LoaiNhom loaiNhom, Long id);
+
     @Query("select p from PhanCongGiangVien p where p.keHoachChiTiet.id = ?1")
     List<PhanCongGiangVien> findByKeHoachCt(Long idKeHoach);
 

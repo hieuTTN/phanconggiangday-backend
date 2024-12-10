@@ -43,11 +43,11 @@ public class PhanCongGiangVienService {
     }
 
     public PhanCongGiangVien save(PhanCongGiangVien phanCongGiangVien){
-        if(phanCongGiangVienRepository.findByGiangVienAndKeHoach(phanCongGiangVien.getKeHoachChiTiet().getId(),
-                phanCongGiangVien.getGiangVien().getId()).isPresent()){
+        if(phanCongGiangVienRepository.findByGiangVienAndKeHoachAndLoaiNhom(phanCongGiangVien.getKeHoachChiTiet().getId(),
+                phanCongGiangVien.getGiangVien().getId(), phanCongGiangVien.getLoaiNhom()).isPresent()){
             throw new MessageException("Giảng viên đã được thêm, không thể thêm lại");
         }
-       KeHoachChiTiet keHoachChiTiet = keHoachChiTietRepository.findById(phanCongGiangVien.getKeHoachChiTiet().getId()).get();
+        KeHoachChiTiet keHoachChiTiet = keHoachChiTietRepository.findById(phanCongGiangVien.getKeHoachChiTiet().getId()).get();
         if (keHoachChiTiet.getLocked() != null){
             if(keHoachChiTiet.getLocked() == true){
                 throw new MessageException("Kế hoạch đã bị khóa");
@@ -88,6 +88,10 @@ public class PhanCongGiangVienService {
 
     public PhanCongGiangVien update(Long id, Integer soNhom, LoaiNhom loaiNhom) {
         PhanCongGiangVien pc = phanCongGiangVienRepository.findById(id).get();
+        if(phanCongGiangVienRepository.findByGiangVienAndKeHoachAndLoaiNhomAndId(pc.getKeHoachChiTiet().getId(),
+                pc.getGiangVien().getId(), loaiNhom, id).isPresent()){
+            throw new MessageException("Giảng viên đã được thêm, không thể thêm lại");
+        }
         KeHoachChiTiet keHoachChiTiet = pc.getKeHoachChiTiet();
         if (pc.getKeHoachChiTiet().getLocked() != null){
             if(keHoachChiTiet.getLocked() == true){
