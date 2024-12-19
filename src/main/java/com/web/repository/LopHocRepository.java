@@ -22,4 +22,7 @@ public interface LopHocRepository extends JpaRepository<LopHoc, Long> {
 
     @Query("select sum(l.soSinhVienHienTai) from LopHoc l where l.khoaHoc.id = ?1 and l.nganh.id = ?2")
     Integer tongSinhVien(Long khoaHocId, Long nganhId);
+
+    @Query("select l from LopHoc l where l.maLop like ?1")
+    Page<LopHoc> findByParam(String search, Pageable pageable);
 }

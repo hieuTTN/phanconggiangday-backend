@@ -3,8 +3,12 @@ package com.web.api;
 import com.web.dto.response.GiangVienHocPhanDto;
 import com.web.dto.response.GiangVienSoTiet;
 import com.web.entity.GiangVien;
+import com.web.entity.HocKy;
+import com.web.entity.NamHoc;
 import com.web.entity.User;
 import com.web.repository.GiangVienRepository;
+import com.web.repository.HocKyRepository;
+import com.web.repository.NamHocRepository;
 import com.web.service.GiangVienService;
 import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/giang-vien")
@@ -26,6 +32,9 @@ public class GiangVienApi {
 
     @Autowired
     private GiangVienRepository giangVienRepository;
+
+    @Autowired
+    private NamHocRepository namHocRepository;
 
     @Autowired
     private UserUtils userUtils;
@@ -138,4 +147,35 @@ public class GiangVienApi {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/admin/ti-le-giang-vien")
+    public ResponseEntity<?> tiLeGiangVien(){
+        Long coHuu = giangVienRepository.demByLoaiHopDong("Cơ hữu");
+        Long thinhGiang = giangVienRepository.demByLoaiHopDong("Thỉnh giảng");
+        Long moiGiang = giangVienRepository.demByLoaiHopDong("Mời giảng");
+        Map<String, Long> map = new HashMap<>();
+        map.put("coHuu",coHuu);
+        map.put("thinhGiang",thinhGiang);
+        map.put("moiGiang",moiGiang);
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/tong-so-tiet")
+    public ResponseEntity<?> tongSotiet(@RequestParam(required = false) Long namHocId){
+        NamHoc hk = namHocRepository.top1();
+        if(namHocId == null){
+            namHocId = hk.getId();
+        }
+        else{
+            hk = namHocRepository.findById(namHocId).get();
+        }
+        Double coHuu = giangVienRepository.tinhTongSoTiet("Cơ hữu", namHocId);
+        Double thinhGiang = giangVienRepository.tinhTongSoTiet("Thỉnh giảng", namHocId);
+        Double moiGiang = giangVienRepository.tinhTongSoTiet("Mời giảng", namHocId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("coHuu",coHuu);
+        map.put("thinhGiang",thinhGiang);
+        map.put("moiGiang",moiGiang);
+        map.put("namHoc",hk);
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
 }

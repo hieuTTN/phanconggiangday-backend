@@ -32,9 +32,13 @@ public class LopHocService {
         return lopHocRepository.findById(id).get();
     }
 
-    public Page<LopHoc> findAll(Pageable pageable, Long khoaHocId, Long nganhId ) {
+    public Page<LopHoc> findAll(Pageable pageable, Long khoaHocId, Long nganhId,String search) {
         Page<LopHoc> page = null;
-        if(khoaHocId == null && nganhId == null){
+        if(search != null){
+            search = "%"+search+"%";
+            page = lopHocRepository.findByParam(search, pageable);
+        }
+        else if(khoaHocId == null && nganhId == null){
             page = lopHocRepository.findAll(pageable);
         }
         else if (khoaHocId != null && nganhId == null) {

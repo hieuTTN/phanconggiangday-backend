@@ -39,8 +39,8 @@ public class LopHocApi {
 
     @GetMapping("/all/findAll-page")
         public ResponseEntity<?> findAll(Pageable pageable, @RequestParam(required = false) Long khoaHocId,
-                                         @RequestParam(required = false) Long nganhId){
-        Page<LopHoc> result = lopHocService.findAll(pageable,khoaHocId, nganhId);
+                                         @RequestParam(required = false) Long nganhId, @RequestParam(required = false) String search){
+        Page<LopHoc> result = lopHocService.findAll(pageable,khoaHocId, nganhId,search);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 }
