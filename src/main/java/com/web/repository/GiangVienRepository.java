@@ -93,6 +93,9 @@ public interface GiangVienRepository extends JpaRepository<GiangVien, Long> {
     @Query("select count(g.id) from GiangVien g where g.dangHopDong = ?1")
     Long demByLoaiHopDong(String loaiHopDong);
 
+    @Query("select g from GiangVien g where g.dangHopDong = ?1")
+    List<GiangVien> findByLoaiHopDong(String loaiHopDong);
+
 
     @Query(value = "select sum(\n" +
             "    COALESCE(\n" +

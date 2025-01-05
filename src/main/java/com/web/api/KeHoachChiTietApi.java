@@ -19,8 +19,8 @@ public class KeHoachChiTietApi {
 
     @GetMapping("/all/find-by-kehoach")
     public ResponseEntity<?> getAll(Pageable pageable, @RequestParam(required = false) Long idNamHoc,
-                                    @RequestParam(required = false) String search){
-        Page<KeHoachChiTiet> result = keHoachChiTietService.findByNamHoc(search,idNamHoc,pageable);
+                                    @RequestParam(required = false) String search, @RequestParam(required = false) Long idBoMon ){
+        Page<KeHoachChiTiet> result = keHoachChiTietService.findByNamHoc(search,idNamHoc, idBoMon,pageable);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

@@ -35,7 +35,7 @@ public class KeHoachChiTietService {
     @Autowired
     private HocPhanRepository hocPhanRepository;
 
-    public Page<KeHoachChiTiet> findByNamHoc(String search,Long idNamHoc, Pageable pageable){
+    public Page<KeHoachChiTiet> findByNamHoc(String search,Long idNamHoc,Long idBoMon, Pageable pageable){
         if(search == null){
             search = "";
         }
