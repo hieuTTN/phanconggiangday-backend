@@ -135,6 +135,8 @@ public class GiangVienService {
         dto.setGiangVienHocPhans(giangVienHocPhans);
         Integer soNhomDay = phanCongGiangVienRepository.soNhomDay(idGv, namHocId);
         dto.setSoNhomDay(soNhomDay);
+        Double tongTiet = giangVienRepository.tinhTongSoTiet(idGv, namHocId);
+        dto.setTongTiet(tongTiet);
         return dto;
     }
 

@@ -264,4 +264,90 @@ public class PhanCongGiangVienService {
         mailService.sendEmail(p.getGiangVien().getUser().getEmail(), "Phiếu mời giảng",noiDung, false, true);
     }
 
+    public void sendMailMoiGiang(Long namHocId) {
+        List<GiangVien> giangVienMoiGiang = giangVienRepository.findByLoaiHopDong("Mời giảng");
+        List<GiangVien> giangVienThinhGiang = giangVienRepository.findByLoaiHopDong("Thỉnh giảng");
+        NamHoc namHoc = namHocRepository.findById(namHocId).get();
+        for(GiangVien g : giangVienMoiGiang){
+            List<PhanCongGiangVien> list = phanCongGiangVienRepository.findByGiangVienAndNamHoc(g.getId(), namHocId);
+            if(list.size() > 0){
+                System.out.println("===================================================");
+                System.out.println("giang vien moi giang: "+ g.getUser().getEmail());
+                sendListPhieuMoiGiang(list, g,"Phiếu Mời Giảng", namHoc);
+            }
+        }
+        for(GiangVien g : giangVienThinhGiang){
+            List<PhanCongGiangVien> list = phanCongGiangVienRepository.findByGiangVienAndNamHoc(g.getId(), namHocId);
+            if(list.size() > 0){
+                System.out.println("===================================================");
+                System.out.println("giang vien thinh giang: "+ g.getUser().getEmail());
+                sendListPhieuMoiGiang(list, g,"Phiếu Thính Giảng", namHoc);
+            }
+        }
+    }
+
+
+    public void sendListPhieuMoiGiang(List<PhanCongGiangVien> list, GiangVien g, String loaiPhieu, NamHoc namHoc){
+        LocalDate now = LocalDate.now();
+        String noiDung =
+                "<div style=\"border: 1px solid black; padding: 20px;\">\n" +
+                        "        <div style=\"display: flex; margin-bottom: 20px;\">\n" +
+                        "            <div style=\"width: 50%; text-align: center;\">\n" +
+                        "                <h3 style=\"margin: 0; font-size: 18px; font-weight: 400;\">ỦY BAN NHÂN DÂN</h3>\n" +
+                        "                <h3 style=\"margin: 0; font-size: 18px; font-weight: 400;\">THÀNH PHỐ HỒ CHÍ MINH</h3>\n" +
+                        "                <h3 style=\"margin: 0; font-size: 18px;\">TRƯỜNG ĐẠI HỌC CÔNG NGHIỆP TPHCM</h3>\n" +
+                        "            </div>\n" +
+                        "            <div style=\"width: 50%; text-align: center;\">\n" +
+                        "                <h3 style=\"margin: 0; font-size: 18px; font-weight: 400;\">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h3>\n" +
+                        "                <strong style=\"margin: 0; font-size: 18px;\">Độc lập - tự do - Hạnh phúc</strong>\n" +
+                        "            </div>\n" +
+                        "        </div>\n" +
+                        "\n" +
+                        "        <h2 style=\"text-align: center; margin: 20px 0; font-size: 20px;\">" +loaiPhieu+" " +namHoc.getHocKy()+" năm học "+namHoc.getTenNamHoc()+"</h2>\n" +
+                        "\n" +
+                        "        <div style=\"margin-bottom: 20px;\">\n" +
+                        "            <p>Khoa: <strong>Công nghệ Thông tin</strong></p>\n" +
+                        "            <p>Mời Giảng Viên: "+g.getTenGV()+"<span style=\"margin-left: 100px;\">Mã số CBGV: "+g.getMaCB()+"</span></p>\n" +
+                        "            <p>Học vị, chức danh: "+g.getChucDanh()+"</p>\n" +
+                        "            <p>Hướng tới theo kế hoạch sau:</p>\n" +
+                        "        </div>\n" +
+                        "\n" +
+                        "        <table style=\"width: 100%; border-collapse: collapse; text-align: center;\">\n" +
+                        "            <thead>\n" +
+                        "                <tr>\n" +
+                        "                    <th style=\"border: 1px solid black; padding: 5px;\">STT</th>\n" +
+                        "                    <th style=\"border: 1px solid black; padding: 5px;\">Tên Học phần</th>\n" +
+                        "                    <th style=\"border: 1px solid black; padding: 5px;\">Mã HP</th>\n" +
+                        "                    <th style=\"border: 1px solid black; padding: 5px;\">Số TC</th>\n" +
+                        "                    <th style=\"border: 1px solid black; padding: 5px;\">Số tiết của HP</th>\n" +
+                        "                    <th style=\"border: 1px solid black; padding: 5px;\">Số lượng lớp/nhóm</th>\n" +
+                        "                    <th style=\"border: 1px solid black; padding: 5px;\">Giảng dạy ở HK</th>\n" +
+                        "                </tr>\n" +
+                        "            </thead>\n" +
+                        "            <tbody>\n";
+                        Integer stt = 0;
+                        for(PhanCongGiangVien p : list){
+                            ++stt;
+                            String loaiNhom = p.getLoaiNhom().toString();
+                            if (loaiNhom.equals("ALL")) loaiNhom = "TL + TH";
+                            noiDung += "<tr>\n" +
+                                    "<td style=\"border: 1px solid black; padding: 5px;\">"+stt+"</td>\n" +
+                                    "<td style=\"border: 1px solid black; padding: 5px;\">"+p.getKeHoachChiTiet().getHocPhan().getTenHP()+"</td>\n" +
+                                    "<td style=\"border: 1px solid black; padding: 5px;\">"+p.getKeHoachChiTiet().getHocPhan().getMaHP()+"</td>\n" +
+                                    "<td style=\"border: 1px solid black; padding: 5px;\">"+p.getKeHoachChiTiet().getHocPhan().getSoTinChi()+"</td>\n" +
+                                    "<td style=\"border: 1px solid black; padding: 5px;\">"+p.getKeHoachChiTiet().getHocPhan().getTongSoTiet()+"</td>\n" +
+                                    "<td style=\"border: 1px solid black; padding: 5px;\">"+p.getSoNhom()+" nhóm "+loaiNhom+"</td>\n" +
+                                    "<td style=\"border: 1px solid black; padding: 5px;\">"+p.getKeHoachChiTiet().getNamHoc().getHocKy()+" - "+p.getKeHoachChiTiet().getNamHoc().getTenNamHoc()+"</td>\n" +
+                                    "</tr>\n";
+                        }
+                        noiDung += "            </tbody>\n" +
+                        "        </table>\n" +
+                        "\n" +
+                        "        <div style=\"margin-top: 20px; text-align: right;\">\n" +
+                        "            <p>Thành phố Hồ Chí Minh, ngày "+now.getDayOfMonth()+" tháng "+now.getMonthValue()+" năm "+now.getYear()+"</p>\n" +
+                        "            <p><strong>Trưởng Đơn vị</strong></p>\n" +
+                        "        </div>\n" +
+                        "    </div>";
+        mailService.sendEmail(g.getUser().getEmail(), loaiPhieu,noiDung, false, true);
+    }
 }

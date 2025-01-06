@@ -13,4 +13,6 @@ public class GiangVienHocPhanDto {
     private List<GiangVienHocPhan> giangVienHocPhans;
 
     private Integer soNhomDay;
+
+    private Double tongTiet;
 }

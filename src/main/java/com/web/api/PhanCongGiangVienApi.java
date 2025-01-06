@@ -63,5 +63,11 @@ public class PhanCongGiangVienApi {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    @PostMapping("/admin/send-mail-moi-giang")
+    public ResponseEntity<?> sendMailMoiGiang(@RequestParam Long namHocId) {
+        phanCongGiangVienService.sendMailMoiGiang(namHocId);
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
 
 }
