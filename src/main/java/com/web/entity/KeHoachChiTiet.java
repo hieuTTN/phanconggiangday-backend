@@ -23,6 +23,8 @@ public class KeHoachChiTiet {
 
     private Integer tongSinhVien;
 
+    private Integer tongSinhVienThamKhao;
+
     private Boolean locked;
 
     @ManyToOne

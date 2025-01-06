@@ -3,6 +3,7 @@ package com.web.service;
 import com.web.entity.GiangVien;
 import com.web.entity.GiangVienHocPhan;
 import com.web.entity.User;
+import com.web.enums.LoaiNhom;
 import com.web.exception.MessageException;
 import com.web.repository.GiangVienHocPhanRepository;
 import com.web.repository.GiangVienRepository;
@@ -36,6 +37,12 @@ public class GiangVienHocPhanService {
         giangVienHocPhan.setGiangVien(giangVien);
         giangVienHocPhanRepository.save(giangVienHocPhan);
         return giangVienHocPhan;
+    }
+
+    public void updateLoaiNhom(Long id, LoaiNhom loaiNhom){
+        GiangVienHocPhan giangVienHocPhan = giangVienHocPhanRepository.findById(id).get();
+        giangVienHocPhan.setLoaiNhom(loaiNhom);
+        giangVienHocPhanRepository.save(giangVienHocPhan);
     }
 
     public Page<GiangVienHocPhan> findByUser(Pageable pageable){

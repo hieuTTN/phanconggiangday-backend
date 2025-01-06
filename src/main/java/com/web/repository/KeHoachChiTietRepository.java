@@ -16,6 +16,9 @@ public interface KeHoachChiTietRepository extends JpaRepository<KeHoachChiTiet, 
     @Query("select k from KeHoachChiTiet k where k.namHoc.id = ?1 and (k.hocPhan.tenHP like ?2 or k.hocPhan.maHP like ?2)")
     Page<KeHoachChiTiet> findByNamHoc(Long idNamHoc,String search, Pageable pageable);
 
+    @Query("select k from KeHoachChiTiet k where k.namHoc.id = ?1 and (k.hocPhan.tenHP like ?2 or k.hocPhan.maHP like ?2) and k.hocPhan.boMon.id = ?3")
+    Page<KeHoachChiTiet> findByNamHocAndBoMon(Long idNamHoc,String search, Long idBoMon, Pageable pageable);
+
     @Query("select k from KeHoachChiTiet k where k.namHoc.id = ?1")
     List<KeHoachChiTiet> findByNamHoc(Long namHocId);
 

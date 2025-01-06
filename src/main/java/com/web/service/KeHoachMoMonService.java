@@ -120,6 +120,7 @@ public class KeHoachMoMonService {
             }
             System.out.println("tong sv: "+tongSv);
             k.setTongSinhVien(tongSv);
+            k.setTongSinhVienThamKhao(tongSv);
             keHoachChiTietRepository.save(k);
         }
 

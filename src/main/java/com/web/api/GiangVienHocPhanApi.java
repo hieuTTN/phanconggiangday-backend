@@ -1,6 +1,7 @@
 package com.web.api;
 import com.web.entity.GiangVien;
 import com.web.entity.GiangVienHocPhan;
+import com.web.enums.LoaiNhom;
 import com.web.service.GiangVienHocPhanService;
 import com.web.service.GiangVienService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,12 @@ public class GiangVienHocPhanApi {
     public ResponseEntity<?> create(@RequestBody GiangVienHocPhan giangVienHocPhan) {
         GiangVienHocPhan result = giangVienHocPhanService.save(giangVienHocPhan);
         return new ResponseEntity(result, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/teacher/update-loainhom")
+    public ResponseEntity<?> create(@RequestParam Long id, @RequestParam LoaiNhom loaiNhom) {
+        giangVienHocPhanService.updateLoaiNhom(id,loaiNhom);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/teacher/delete")

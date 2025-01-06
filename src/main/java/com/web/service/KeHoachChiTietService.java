@@ -40,7 +40,15 @@ public class KeHoachChiTietService {
             search = "";
         }
         search = "%"+search+"%";
-        return keHoachChiTietRepository.findByNamHoc(idNamHoc,search,pageable);
+        Page<KeHoachChiTiet> page = null;
+        if(idBoMon == null){
+            page = keHoachChiTietRepository.findByNamHoc(idNamHoc,search,pageable);
+        }
+        else{
+            System.out.println("id bo mon: "+idBoMon);
+            page = keHoachChiTietRepository.findByNamHocAndBoMon(idNamHoc,search, idBoMon,pageable);
+        }
+        return page;
     }
 
     public Page<KeHoachChiTiet> findByNamHocAndTbm(String search,Long idNamHoc, Pageable pageable){
